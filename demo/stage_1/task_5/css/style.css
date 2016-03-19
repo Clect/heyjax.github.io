@@ -77,6 +77,7 @@ article p{
 p+img{
   height: 240px;
   width: 300px;
+  max-width: 100%;
   margin-top: 20px;
 }
 article ul{
