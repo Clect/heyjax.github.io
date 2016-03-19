@@ -38,12 +38,12 @@ nav ul li{
 	margin-left: 30px;
   white-space: nowrap; /* 文本不会换行 */
 }
-nav a:link{
-	color:#929091;
+nav a{
+	color:#fff; 
 	text-decoration: none;
 }
-nav a:visited{
-	color:#fff;
+.a-last{
+	color: #929091;
 }
 
 article,aside{
@@ -107,6 +107,9 @@ table{
 th{
   text-align: left;
 }
+th,td{
+  padding: 5px;
+}
 thead{
 	background-color: #343434;
 	color: #fff;
@@ -148,11 +151,12 @@ textarea{
 }
 .submitbtn{
 	width:100%;
-	background-color: blue;
+	background-color: #3355D0;
 	color: #fff;
-	height: 50px;
+	height: 40px;
+  border:1px solid #3355D0;
 	border-radius: 10px;
-	font-size: 20px;
+	font-size: 1.5em;
 }
 footer{
 	font-size: 10px;
