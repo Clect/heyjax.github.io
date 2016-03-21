@@ -181,9 +181,6 @@ input[type="radio"]{
   display: none;
 
 }
-input[type="checkbox"]{
-  background-color: #fff;
-}
 
 
 .radio-label:before{
@@ -203,6 +200,25 @@ input[type='radio']:checked + .radio-label:before {
     line-height: 10px;
     background-color: #369DF9;
     vertical-align: text-top;
+}
+ input[type="checkbox"]{
+      display: none;
+    }
+.checkbox-label:before{
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border:1px solid #DEDEDE;
+  vertical-align: text-top;
+  background-color: #fff;
+}
+input[type='checkbox']:checked + .checkbox-label:before {
+  content: "\221a";   
+  color:#fff;
+  line-height: 10px;      
+  vertical-align: text-top;
+  background-color: #369DF9;
 }
 
 main{
