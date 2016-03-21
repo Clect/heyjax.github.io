@@ -55,6 +55,22 @@ main{
         color: $white;
         background-color: $pink;
       }
+      div.span{
+        text-align: center;
+        margin: 25px auto;
+        height: 20px;
+        span{
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          margin: 3px;
+          border: 1px solid $gray;
+          border-radius: 5px;
+        }
+        span.active{
+          background-color: $gray;
+        }
+      }
     }
     div.info::before{
       content: "";
