@@ -120,7 +120,7 @@ main section.first article.about span{
   bottom:9px;
 }
 main section.second{
-  margin-top: 40px;
+  margin-top: 20px;
 }
 main section.second article{
   float: left;
@@ -334,7 +334,7 @@ main section.fourth div.corner_black span{
   font-size: 72px;
   color:#d45d5c;
   position: absolute;
-  left:-50px;
+  left:-100px;
   }
 main section.fourth div.corner_black p{
   text-indent: 2em;
