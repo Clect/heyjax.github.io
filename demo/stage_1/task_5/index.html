@@ -142,20 +142,20 @@
       <div class="formgroup">
         <label class="left-label" for="email">请输入邮箱地址</label> 
         <div class="right-textinput">
-          <input id="email" type="email" placeholder="这是一个文本输入框">
+          <input id="email" type="email" value="这是一个文本输入框">
           <span class="tip">邮箱地址请按要求格式输入</span>
         </div>
       </div>
 
       <div class="formgroup">
         <label  class="left-label"for="password">请输入密码</label>
-        <input id="password" type="password" placeholder="........">
+        <input id="password" type="password" value="........">
       </div>
 
       <div class="formgroup">
         <label class="left-label" for="confirm-password">请重复输入密码</label>
         <div class="right-textinput">
-          <input id="confirm-password" type="password" placeholder="........"> 
+          <input id="confirm-password" type="password" value="........"> 
           <span class="tip">密码请为6-16位英文数字</span>
         </div>
       </div>    
@@ -173,14 +173,14 @@
 
       <div class="formgroup">
         <label class="left-label" >爱好</label>
-        <label class="checkbox-label"><input id="sports" type="checkbox">运动</label>
-        <label class="checkbox-label"><input id="arts" type="checkbox">艺术</label>
-        <label class="checkbox-label"><input id="science" type="checkbox">科学</label>
+        <input id="sports" type="checkbox"><label for="sports" class="checkbox-label">运动</label>
+        <input id="arts" type="checkbox"><label for="arts" class="checkbox-label">艺术</label>
+        <input id="science" type="checkbox"><label  for="science" class="checkbox-label">科学</label>
       </div>  
           
       <div class="formgroup">
         <label class="left-label" for="description">个人描述</label>
-        <textarea id="description" placeholder="这是一个多行输入框，输入你的个人描述"></textarea>
+        <textarea id="description" value="这是一个多行输入框，输入你的个人描述">这是一个多行输入框，输入你的个人描述</textarea>
       </div>
 
       <input class="submitbtn" type="submit" value="确认提交">
@@ -189,6 +189,6 @@
   </aside>
      	
   
-	<footer>版权所有@</footer>
+	<footer>版权所有&copy;</footer>
 </body>
 </html>
