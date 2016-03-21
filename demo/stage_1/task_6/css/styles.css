@@ -263,6 +263,7 @@ main section.fourth div.corner_gray ul{
 main section.fourth div.corner_gray ul li{
   list-style: none;
   color: #5a5b5b;
+  font-family: "Microsoft YaHei"
 }
 main section.fourth div.corner_gray ul li:before {
   content: "";
