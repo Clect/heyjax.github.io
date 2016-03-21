@@ -86,7 +86,7 @@ main{
         input:focus{
           outline-width: 0;
         }
-        @include responsive(medium-screens) {
+        @include responsive(wide-screens) {
           textarea,
           input[type="submit"]{
             width: 300px;

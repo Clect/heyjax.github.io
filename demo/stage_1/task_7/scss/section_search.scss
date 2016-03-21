@@ -110,6 +110,7 @@ main{
         float: left;
         width: 220px;
         margin-right: 35px;
+        margin-bottom: 100px;
         div.img{
           width:212px;
           background-color: $white;
@@ -151,7 +152,7 @@ main{
         margin-right: 0;
       }
     }
-    @include responsive(medium-screens) {
+    @include responsive(wide-screens) {
       div.search_activity{
         padding: 30px;
         div{
