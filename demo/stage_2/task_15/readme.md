@@ -139,7 +139,7 @@ for (var prop in obj) {
     * split() 方法通过把字符串分割成子字符串来把一个 String 对象分割成一个字符串数组。
     * replace() 方法使用一个替换值（replacement）替换掉一个匹配模式（pattern）在原字符串中某些或所有的匹配项，并返回替换后的字符串。
         * 任务15里面我聪明的队友用了另外一种更加简便的办法，就是通过正则替换到空气质量，并用split分开
-    ![](,,/img/function_get_data_reg.png)
+    ![](../img/function_get_data_reg.png)
 * 正则匹配
     * 验证输入，利用unicode字符可以匹配出输入的是否为中文
     ```
