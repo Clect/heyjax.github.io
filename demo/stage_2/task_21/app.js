@@ -19,14 +19,15 @@ var createTag = (function() {
     this.output = document.getElementsByClassName(output)[0];
     // 公有方法
     this.getData = function() {
-      if (input === 'tag') {
-        var value = this.input.value.match(/(^[^,\， ]*)/)[0];
-        return value;
+      switch (input) {
+        case 'tag':
+          var value = this.input.value.match(/(^[^,\， ]*)/)[0];
+          break;
+        case 'hobby':
+        default:
+          var value = this.input.value.trim().split(/,|，|、|\s|\n|\r|\t/);
       }
-      else if (input === 'hobby') {
-        var value = this.input.value.trim().split(/,|，|、|\s|\n|\r|\t/);
-        return value;
-      }
+      return value;
     }
     this.render = function(value) {
       if (value === '' || value === ',' || value === '，') {
