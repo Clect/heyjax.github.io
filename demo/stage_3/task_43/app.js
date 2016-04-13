@@ -33,7 +33,7 @@ function eventInit() {
 function init() {
   /**
   * 初始化相册
-  * 参数：初始化照片布局，容器宽度，容器高度，图片url，相册类名
+  * 参数：初始化照片布局，图片url，相册类名
   */
   var imgData = [
     'img/img_1.jpg',
@@ -43,7 +43,7 @@ function init() {
     'img/img_5.jpg',
     'img/img_6.jpg'
     ]
-  mixPhoto.init('photo_six', '100%', '100%', imgData, 'mixPhotoContainer');
+  mixPhoto.init('photo_six', imgData, 'mixPhotoContainer');
   eventInit();
 }
 

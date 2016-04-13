@@ -28,6 +28,7 @@ var mixPhoto = {
       ele.style.display = 'block';
       ele.style.webkitClipPath = 'none';
       ele.style.clipPath = 'none';
+      ele.style.webkitClipPath = 'none';
       ele.style.overflow = 'hidden';
       if (hidden) {
         ele.style.display = 'none';
@@ -107,7 +108,7 @@ var mixPhoto = {
   * 默认切换布局的参数为photo_one到photo_six
   */
 
-  init: function(number, width, height, imgUrl, album) {
+  init: function(number, imgUrl, album) {
     var container = document.getElementsByClassName(album)[0];
     for (var i = 1; i <= 6; i++) {
       var div = document.createElement('div');
@@ -120,9 +121,6 @@ var mixPhoto = {
       div.appendChild(divImg);
       container.appendChild(div);
     }
-    container.style.width = width;
-    container.style.height = height;
-    container.style.position = 'absolute';
     this.display(number);
   }
 }
