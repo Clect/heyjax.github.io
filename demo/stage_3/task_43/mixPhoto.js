@@ -33,12 +33,14 @@ var mixPhoto = {
       ele.style.clipPath = 'none';
       ele.style.webkitClipPath = 'none';
       ele.style.overflow = 'hidden';
+      ele.firstChild.firstChild.style.textAlign = 'left';
       if (hidden) {
         ele.style.display = 'none';
       }
       if (clip) {
-        ele.style.webkitClipPath = 'polygon(0 0, 66.6% 0, 33.3% 100%, 0% 100%)';
-        ele.style.clipPath = 'polygon(0 0, 66.6% 0, 33.3% 100%, 0% 100%)';
+        ele.style.webkitClipPath = 'polygon(66.6% 0, 100% 0, 100% 100%, 33.3% 100%)';
+        ele.style.clipPath = 'polygon(66.6% 0, 100% 0, 100% 100%, 33.3% 100%)';
+        ele.firstChild.firstChild.style.textAlign = 'right';
       }
     }
     // 设置不同场景下的正方形
@@ -49,7 +51,6 @@ var mixPhoto = {
           ele.style.width = window.getComputedStyle(ele).getPropertyValue('height');
           break;
         case 'photo_five':
-          ele.style.width = (containerWidth * width) + 'px';
           ele.style.height = window.getComputedStyle(ele).getPropertyValue('width');
           break;
         default:
@@ -64,8 +65,12 @@ var mixPhoto = {
           img_1.style.width = (containerWidth - img_2Width) + 'px';
           break;
         case 'photo_five':
+          var img_1Height = window.getComputedStyle(img_1).getPropertyValue('height').slice(0,-2);
           var img_2Height = window.getComputedStyle(img_2).getPropertyValue('height').slice(0,-2);
           img_3.style.height = (containerHeight - img_2Height) + 'px';
+          if (parseInt(img_2Height) > parseInt(img_1Height)){
+            img_1.style.height = img_2Height + 'px';
+          }
           break;
         default:
       }
@@ -81,8 +86,8 @@ var mixPhoto = {
         setSize(img_6, true, false);
         break;
       case 'photo_two':
-        setSize(img_1, false, true, '100%', '100%', 'none', 'absolute');
-        setSize(img_2, false, false, '100%', '100%', 'none');
+        setSize(img_1, false, false, '100%', '100%', 'none', 'absolute');
+        setSize(img_2, false, true, '100%', '100%', 'none');
         setSize(img_3, true, false);
         setSize(img_4, true, false);
         setSize(img_5, true, false);
@@ -114,7 +119,7 @@ var mixPhoto = {
         setSize(img_4, false, false, '33.3%', '33.4%', 'right');
         setSize(img_5, false, false, '33.3%', '33.4%', 'right');
         setSize(img_6, true, false);
-        setSquare('photo_five', img_2, 0.333, 0.333);
+        setSquare('photo_five', img_2, 0.33, 0.33);
         fixSquare('photo_five');
         break;
       case 'photo_six':
@@ -130,12 +135,13 @@ var mixPhoto = {
     }
   },
   /**
-  * 设置照片的url
+  * 设置图片的url
   */
 
-  setUrl: function(ele, url) {
+  setUrl: function(ele, url, content) {
       ele.style.backgroundSize = 'cover';
       ele.style.backgroundImage = 'url(' + url + ')';
+      ele.firstChild.textContent = content;
   },
   /**
   * 初始化相册布局，默认六张图片
@@ -145,17 +151,22 @@ var mixPhoto = {
   * 默认切换布局的参数为photo_one到photo_six
   */
 
-  init: function(number, imgUrl, album) {
+  init: function(number, imgData, album) {
     var container = document.getElementsByClassName(album)[0];
     for (var i = 1; i <= 6; i++) {
       var div = document.createElement('div');
       var divImg = document.createElement('div');
-      var url = imgUrl[i-1];
+      var divDetail = document.createElement('div');
+      var url = imgData[i-1][0];
+      var content = imgData[i-1][1];
       div.id = 'img_' + i;
-      this.setUrl(divImg, url);
       divImg.style.height = '100%';
       divImg.style.width = '100%';
+      divDetail.style.height = '20%';
+      divDetail.style.width = '100%';
+      divImg.appendChild(divDetail);
       div.appendChild(divImg);
+      this.setUrl(divImg, url, content);
       container.appendChild(div);
     }
     this.display(number, album);

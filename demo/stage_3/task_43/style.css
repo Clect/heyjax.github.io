@@ -56,3 +56,18 @@ div.mixPhotoContainer {
   position: absolute;
   overflow: hidden;
 }
+div.mixPhotoContainer div div {
+  position: relative;
+}
+div.mixPhotoContainer div div div {
+  position: absolute;
+  bottom: 0;
+  display: none;
+  color: white;
+  opacity: 0.9;
+  -webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+div.mixPhotoContainer div div:hover div{
+  display: block;
+}
