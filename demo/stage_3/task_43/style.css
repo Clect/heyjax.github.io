@@ -22,11 +22,6 @@ div.button button{
   background-color: black;
   color: white;
 }
-div.container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
 div.pop {
   display: none;
   width: 200px;

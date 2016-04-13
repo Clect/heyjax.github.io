@@ -1,161 +1,52 @@
-var createPhoto = (function() {
-  function _photo() {
-  }
-  _photo.prototype = {
-    /**
-    * 设置显示方式
-    */
-    display: function(number) {
-      var img_1 = document.getElementById('img_1');
-      var img_2 = document.getElementById('img_2');
-      var img_3 = document.getElementById('img_3');
-      var img_4 = document.getElementById('img_4');
-      var img_5 = document.getElementById('img_5');
-      var img_6 = document.getElementById('img_6');
-      function setSize(ele, hidden, clip, width, height, float, position) {
-        ele.style.width = width;
-        ele.style.height = height;
-        ele.style.float = float;
-        ele.style.position = position;
-        ele.style.display = 'block';
-        ele.style.webkitClipPath = 'none';
-        ele.style.clipPath = 'none';
-        ele.style.overflow = 'hidden';
-        if (hidden) {
-          ele.style.display = 'none';
-        }
-        if (clip) {
-          ele.style.webkitClipPath = 'polygon(0 0, 66.6% 0, 33.3% 100%, 0% 100%)';
-          ele.style.clipPath = 'polygon(0 0, 66.6% 0, 33.3% 100%, 0% 100%)';
-        }
-      }
-      switch (number) {
-        case 'photo_one':
-          setSize(img_1, false, false, '100%', '100%', 'none', 'absolute');
-          setSize(img_2, true, false);
-          setSize(img_3, true, false);
-          setSize(img_4, true, false);
-          setSize(img_5, true, false);
-          setSize(img_6, true, false);
-          break;
-        case 'photo_two':
-          setSize(img_1, false, true, '100%', '100%', 'none', 'absolute');
-          setSize(img_2, false, false, '100%', '100%', 'none');
-          setSize(img_3, true, false);
-          setSize(img_4, true, false);
-          setSize(img_5, true, false);
-          setSize(img_6, true, false);
-          break;
-        case 'photo_three':
-          setSize(img_1, false, false, '66.6%', '100%', 'left', 'static');
-          setSize(img_2, false, false, '33.4%', '50%','left');
-          setSize(img_3, false, false, '33.4%', '50%','left');
-          setSize(img_4, true, false);
-          setSize(img_5, true, false);
-          setSize(img_6, true, false);
-          break;
-        case 'photo_four':
-          setSize(img_1, false, false, '50%', '50%', 'left', 'static');
-          setSize(img_2, false, false, '50%', '50%', 'left');
-          setSize(img_3, false, false, '50%', '50%', 'left');
-          setSize(img_4, false, false, '50%', '50%', 'left');
-          setSize(img_5, true, false);
-          setSize(img_6, true, false);
-          break;
-        case 'photo_five':
-          setSize(img_1, false, false, '66.6%', '66.6%', 'left', 'static');
-          setSize(img_2, false, false, '33.3%', '33.3%', 'left');
-          setSize(img_3, false, false, '33.4%', '66.7%', 'right');
-          setSize(img_4, false, false, '33.3%', '33.4%', 'left');
-          setSize(img_5, false, false, '33.3%', '33.4%', 'left');
-          setSize(img_6, true, false);
-          break;
-        case 'photo_six':
-          setSize(img_1, false, false, '66.6%', '66.6%' ,'left', 'static');
-          setSize(img_2, false, false, '33.333%', '33.333%', 'left');
-          setSize(img_3, false, false, '33.333%', '33.333%', 'left');
-          setSize(img_4, false, false, '33.333%', '33.333%', 'left');
-          setSize(img_5, false, false, '33.333%', '33.333%', 'left');
-          setSize(img_6, false, false, '33.333%', '33.333%', 'left');
-          break;
-        default:
-          return ;
-      }
-    },
-    /**
-    * 设置照片的url
-    */
-    setUrl: function(ele, url) {
-        ele.style.backgroundSize = 'cover';
-        ele.style.backgroundImage = 'url(' + url + ')';
-    },
-    /**
-    * 初始化相册布局，默认六张图片
-    * 默认显示图片的div的id为img_1到img_6
-    * 默认相册读取的图片来自img中的img_1.jpg到img_6.jpg
-    * 默认切换布局的参数为photo_one到photo_six
-    */
-    init: function() {
-      var container = document.getElementsByClassName('container')[0];
-      for (var i = 1; i <= 6; i++) {
-        var div = document.createElement('div');
-        var divImg = document.createElement('div');
-        var url = 'img/img_' + i +'.jpg';
-        div.id = 'img_' + i;
-        this.setUrl(divImg, url);
-        divImg.style.height = '100%';
-        divImg.style.width = '100%';
-        div.appendChild(divImg)
-        container.appendChild(div);
-      }
-      this.display('photo_six');
-    }
-  }
-  return _photo;
-})();
+/**
+* pop函数做一个弹窗接受url
+*/
+function pop() {
+  var number = document.getElementById('number');
+  var url = document.getElementById('url');
+  var confirm = document.getElementById('urlConfirm');
+  var cancel = document.getElementById('urlCancel');
+  var popDiv = document.getElementsByClassName('pop')[0];
+  popDiv.style.display = 'block';
+  confirm.addEventListener('click', function() {
+    mixPhoto.setUrl(document.getElementById(number.value).firstChild, url.value);
+    popDiv.style.display = 'none';
+  }, false)
+  cancel.addEventListener('click', function() {
+    popDiv.style.display = 'none'
+  }, false)
+}
 
-var photo = new createPhoto();
-/** -------------------------------------------
-* 以上为封装好的拼图布局相册JavaScript库，通过createPhoto()创建实例
-* 下面是demo展示代码
-----------------------------------------------*/
-
-function init() {
-  /**
-  * pop函数做一个弹窗接受url
-  */
-
-  function pop() {
-    var number = document.getElementById('number');
-    var url = document.getElementById('url');
-    var confirm = document.getElementById('urlConfirm');
-    var cancel = document.getElementById('urlCancel');
-    var popDiv = document.getElementsByClassName('pop')[0];
-    popDiv.style.display = 'block';
-    confirm.addEventListener('click', function() {
-      photo.setUrl(document.getElementById(number.value).firstChild, url.value);
-      popDiv.style.display = 'none';
-    }, false)
-    cancel.addEventListener('click', function() {
-      popDiv.style.display = 'none'
-    }, false)
-  }
-
-  /**
-  * 初始化相册
-  */
-  photo.init();
-
-  /**
-  * 绑定所有事件
-  */
+/**
+* 初始化所有事件
+*/
+function eventInit() {
   var button = document.getElementsByClassName('button')[0];
   button.addEventListener('click',function(event) {
     if (event.target.id === 'setUrl') {
       pop();
     }
-    photo.display(event.target.id);
+    mixPhoto.display(event.target.id);
   }, false)
 }
+
+function init() {
+  /**
+  * 初始化相册
+  * 参数：初始化照片布局，容器宽度，容器高度，图片url，相册类名
+  */
+  var imgData = [
+    'img/img_1.jpg',
+    'img/img_2.jpg',
+    'img/img_3.jpg',
+    'img/img_4.jpg',
+    'img/img_5.jpg',
+    'img/img_6.jpg'
+    ]
+  mixPhoto.init('photo_six', '100%', '100%', imgData, 'mixPhotoContainer');
+  eventInit();
+}
+
+
 
 init();
