@@ -11,7 +11,7 @@ var mixPhoto = {
   * 设置显示方式
   */
 
-  display: function(number) {
+  display: function(number, album) {
     // 获取所需的图片元素
     var img_1 = document.getElementById('img_1');
     var img_2 = document.getElementById('img_2');
@@ -19,6 +19,9 @@ var mixPhoto = {
     var img_4 = document.getElementById('img_4');
     var img_5 = document.getElementById('img_5');
     var img_6 = document.getElementById('img_6');
+    var container = document.getElementsByClassName(album)[0];
+    var containerWidth = window.getComputedStyle(container).getPropertyValue('width').slice(0,-2);
+    var containerHeight = window.getComputedStyle(container).getPropertyValue('height').slice(0,-2);
     // 私有函数，用于设置图片的属性
     function setSize(ele, hidden, clip, width, height, float, position) {
       ele.style.width = width;
@@ -36,6 +39,35 @@ var mixPhoto = {
       if (clip) {
         ele.style.webkitClipPath = 'polygon(0 0, 66.6% 0, 33.3% 100%, 0% 100%)';
         ele.style.clipPath = 'polygon(0 0, 66.6% 0, 33.3% 100%, 0% 100%)';
+      }
+    }
+    // 设置不同场景下的正方形
+    function setSquare(number, ele, width, height) {
+      switch (number) {
+        case 'photo_three':
+          ele.style.height = (containerHeight * height) + 'px';
+          ele.style.width = window.getComputedStyle(ele).getPropertyValue('height');
+          break;
+        case 'photo_five':
+          ele.style.width = (containerWidth * width) + 'px';
+          ele.style.height = window.getComputedStyle(ele).getPropertyValue('width');
+          break;
+        default:
+
+      }
+    }
+    // 修复由于正方形造成的空白
+    function fixSquare(number) {
+      switch (number) {
+        case 'photo_three':
+          var img_2Width = window.getComputedStyle(img_2).getPropertyValue('width').slice(0,-2);
+          img_1.style.width = (containerWidth - img_2Width) + 'px';
+          break;
+        case 'photo_five':
+          var img_2Height = window.getComputedStyle(img_2).getPropertyValue('height').slice(0,-2);
+          img_3.style.height = (containerHeight - img_2Height) + 'px';
+          break;
+        default:
       }
     }
     // 根据传入参数不同对图片进行不同的摆放
@@ -63,6 +95,9 @@ var mixPhoto = {
         setSize(img_4, true, false);
         setSize(img_5, true, false);
         setSize(img_6, true, false);
+        setSquare('photo_three', img_2, 0.5, 0.5);
+        setSquare('photo_three', img_3, 0.5, 0.5);
+        fixSquare('photo_three');
         break;
       case 'photo_four':
         setSize(img_1, false, false, '50%', '50%', 'left', 'static');
@@ -74,11 +109,13 @@ var mixPhoto = {
         break;
       case 'photo_five':
         setSize(img_1, false, false, '66.6%', '66.6%', 'left', 'static');
-        setSize(img_2, false, false, '33.3%', '33.3%', 'left');
-        setSize(img_3, false, false, '33.4%', '66.7%', 'right');
+        setSize(img_2, false, false, '33.3%', '66.6%', 'left');
+        setSize(img_3, false, false, '33.4%', '33.4%', 'right');
         setSize(img_4, false, false, '33.3%', '33.4%', 'right');
         setSize(img_5, false, false, '33.3%', '33.4%', 'right');
         setSize(img_6, true, false);
+        setSquare('photo_five', img_2, 0.333, 0.333);
+        fixSquare('photo_five');
         break;
       case 'photo_six':
         setSize(img_1, false, false, '66.66%', '66.66%' ,'left', 'static');
@@ -121,6 +158,6 @@ var mixPhoto = {
       div.appendChild(divImg);
       container.appendChild(div);
     }
-    this.display(number);
+    this.display(number, album);
   }
 }

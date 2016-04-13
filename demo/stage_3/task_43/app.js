@@ -22,11 +22,11 @@ function pop() {
 */
 function eventInit() {
   var button = document.getElementsByClassName('button')[0];
-  button.addEventListener('click',function(event) {
+  button.addEventListener('click', function(event) {
     if (event.target.id === 'setUrl') {
       pop();
     }
-    mixPhoto.display(event.target.id);
+    mixPhoto.display(event.target.id, 'mixPhotoContainer');
   }, false)
 }
 
