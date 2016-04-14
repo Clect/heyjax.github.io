@@ -13,12 +13,12 @@ var mixPhoto = {
 
   display: function(number, album) {
     // 获取所需的图片元素
-    var img_1 = document.getElementById('img_1');
-    var img_2 = document.getElementById('img_2');
-    var img_3 = document.getElementById('img_3');
-    var img_4 = document.getElementById('img_4');
-    var img_5 = document.getElementById('img_5');
-    var img_6 = document.getElementById('img_6');
+    var img_1 = document.getElementById((album + 'img_1'));
+    var img_2 = document.getElementById((album + 'img_2'));
+    var img_3 = document.getElementById((album + 'img_3'));
+    var img_4 = document.getElementById((album + 'img_4'));
+    var img_5 = document.getElementById((album + 'img_5'));
+    var img_6 = document.getElementById((album + 'img_6'));
     var container = document.getElementsByClassName(album)[0];
     var containerWidth = window.getComputedStyle(container).getPropertyValue('width').slice(0,-2);
     var containerHeight = window.getComputedStyle(container).getPropertyValue('height').slice(0,-2);
@@ -145,7 +145,7 @@ var mixPhoto = {
   },
   /**
   * 初始化相册布局，默认六张图片
-  * 默认显示图片的div的id为img_1到img_6
+  * 默认显示图片的div的id为输出框类名加img_1到img_6
   * 默认相册读取的图片来自img中的img_1.jpg到img_6.jpg
   * 默认相册绝对定位
   * 默认切换布局的参数为photo_one到photo_six
@@ -159,7 +159,7 @@ var mixPhoto = {
       var divDetail = document.createElement('div');
       var url = imgData[i-1][0];
       var content = imgData[i-1][1];
-      div.id = 'img_' + i;
+      div.id = album + 'img_' + i;
       divImg.style.height = '100%';
       divImg.style.width = '100%';
       divDetail.style.height = '20%';
