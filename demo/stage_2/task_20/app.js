@@ -49,10 +49,11 @@ function display(ele) {
 * 查询数值
 */
 function searchData() {
-  var re = new RegExp(search.previousSibling.previousSibling.value.trim());
+  var value = search.previousSibling.previousSibling.value.trim();
+  var re = new RegExp(value);
   for (var i = 0; i < output.children.length; i++) {
     output.children[i].style.backgroundColor = 'CornflowerBlue';
-    if (output.children[i].textContent.match(re)) {
+    if (value != '' && output.children[i].textContent.match(re)) {
       output.children[i].style.backgroundColor = 'lightGreen';
     }
   }
