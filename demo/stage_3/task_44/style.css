@@ -1,0 +1,89 @@
+body {
+  font-family: Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
+  font-size: 14px;
+  margin: -17.5px 0 0 0;
+  padding: 0;
+  overflow: auto;
+}
+
+/* loading style */
+.onload-bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #eee;
+}
+.onload{
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  margin-left: -15px;
+  background: #3498db;
+  border-radius: 50px;
+  animation:  loading 1.5s infinite linear;
+}
+.onload:after{
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-top: 10px solid #9b59b6;
+  border-bottom: 10px solid #9b59b6;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-radius: 50px;
+  content: '';
+  top: -20px;
+  left: -20px;
+  animation:  loading_after 1.5s infinite linear;
+}
+@keyframes loading {
+  0% {transform:  rotate(0deg);}
+  50% {transform:  rotate(180deg);background: #2ecc71;}
+  100% {transform:  rotate(360deg);}
+}
+@keyframes loading_after {
+  0% {border-top: 10px solid #9b59b6;border-bottom: 10px solid #9b59b6;}
+  50% {border-top: 10px solid #3498db;border-bottom: 10px solid #3498db;}
+  100% {border-top: 10px solid #9b59b6;border-bottom: 10px solid #9b59b6;}
+}
+
+/* button */
+header {
+  margin: 0;
+  text-align: center;
+}
+/* waterfall */
+.waterfall {
+  overflow: auto;
+  margin:0 auto;
+  width: 75%;
+}
+.waterfall .wf-column {
+  float: left;
+  box-sizing: border-box;
+}
+.waterfall .wf-box {
+  border: 1px #ccc solid;
+  margin-top: 16px;
+}
+.waterfall img {
+  width: 100%;
+}
+
+/* display */
+.display {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.hidden {
+  display: none;
+}
