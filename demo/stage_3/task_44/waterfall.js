@@ -29,7 +29,6 @@
     var containerSelector = opts.containerSelector || 'waterfallContainer';
     var boxSelector = opts.boxSelector || 'waterfallBox';
     this.column = opts.column || 1;
-    this.gutter = opts.gutter || '0px';
     this.container = document.querySelector(containerSelector);
     this.boxes = this.container ? Array.prototype.slice.call(this.container.querySelectorAll(boxSelector)) : [];
     // init waterfall
@@ -47,10 +46,9 @@
     /**
       * @desc init columns
       * @param {Number} columnNum - the numbers of the column
-      * @param {String} columnGutter - the gutter between columns
       */
 
-    initColumn: function(columnNum, columnGutter) {
+    initColumn: function(columnNum) {
       // create column div
       this.columns = [];
       for (var i = 0; i < columnNum; i++) {
@@ -93,7 +91,7 @@
         }
       }
       // init new column
-      this.initColumn(this.column, this.gutter);
+      this.initColumn(this.column);
       // compose
       for (var i = 0, l = this.boxes.length; i < l; i++) {
           var box = this.boxes[i];

@@ -7,7 +7,6 @@ window.onload = function() {
   var waterfall = new Waterfall({
     containerSelector: '.waterfall',
     boxSelector: '.wf-box',
-    gutter: '16px',
     column: 4
   });
   loadMore();
