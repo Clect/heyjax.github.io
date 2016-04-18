@@ -54,7 +54,6 @@
       for (var i = 0; i < columnNum; i++) {
         var columnDiv = document.createElement('div');
         columnDiv.style.width = (100/columnNum) + '%';
-        columnDiv.style.padding = parseFloat(columnGutter.slice(0, -2) / 2, 2) + 'px';
         columnDiv.setAttribute('class','wf-column');
         this.columns.push(columnDiv);
         this.container.appendChild(columnDiv);
