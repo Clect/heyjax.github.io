@@ -82,10 +82,11 @@
 
     /**
       * @desc init columns and add boxes
+      * @param {Boolean} choose whether to remove the old columns
       */
 
     compose: function(force) {
-      // remove old column
+      // remove old columns
       if (force) {
         for (var i = 0; i < this.columns.length; i++) {
           this.columns[i].remove();
@@ -102,7 +103,7 @@
 
     /**
       * @desc compose all boxs in column
-      * @param the element which add in the box
+      * @param - the element which add in the box
       */
 
     addBox: function(ele) {
