@@ -54,14 +54,14 @@
       for (var i = 0; i < columnNum; i++) {
         var columnDiv = document.createElement('div');
         columnDiv.style.width = (100/columnNum) + '%';
-        columnDiv.setAttribute('class','wf-column');
+        columnDiv.setAttribute('class','waterfallColumn');
         this.columns.push(columnDiv);
         this.container.appendChild(columnDiv);
       }
     },
 
     /**
-      * @desc get the indx of shortest column
+      * @desc get the index of shortest column
       * @return {Number} index
       */
 
@@ -79,7 +79,7 @@
 
     /**
       * @desc init columns and add boxes
-      * @param {Boolean} choose whether to remove the old columns
+      * @param {Boolean} force - choose whether to remove the old columns
       */
 
     compose: function(force) {

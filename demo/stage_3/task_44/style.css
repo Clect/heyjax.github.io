@@ -60,12 +60,12 @@ header {
   margin:0 auto;
   width: 75%;
 }
-.waterfall .wf-column {
+.waterfall .waterfallColumn {
   float: left;
   box-sizing: border-box;
   padding: 8px;
 }
-.waterfall .wf-box {
+.waterfall .waterfallBox {
   border: 1px #ccc solid;
   margin-top: 16px;
 }

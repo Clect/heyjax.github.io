@@ -6,7 +6,7 @@ window.onload = function() {
   }
   var waterfall = new Waterfall({
     containerSelector: '.waterfall',
-    boxSelector: '.wf-box',
+    boxSelector: '.waterfallBox',
     column: 4
   });
   loadMore();
@@ -73,7 +73,7 @@ window.onload = function() {
     return function() {
 
       var box = document.createElement('div');
-      box.className = 'wf-box';
+      box.className = 'waterfallBox';
       var image = document.createElement('img');
       image.src = "http://placehold.it/" + size[i] + '/' + color[i] + '/fff';
       box.appendChild(image);
