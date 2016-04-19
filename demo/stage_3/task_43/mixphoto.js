@@ -1,3 +1,11 @@
+/**
+  *
+  * Mixphoto v0.0.1
+  * Description, by StevenYu.
+  * @desc use with mixphoto.css
+  * @author StevenYu
+  */
+
 ;(function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define([], factory);
@@ -5,7 +13,7 @@
         module.exports = factory();
     } else {
         // Browser globals (root is window)
-        root['Mixphoto'] = factory();
+        root.Mixphoto = factory();
   }
 }(this, function() {
 
@@ -18,7 +26,7 @@
 
   var Mixphoto = function(opts) {
 
-    var opts = opts || {};
+    opts = opts || {};
     var containerSelector = opts.containerSelector || '.mixphotoContainer';
     var boxSelector = opts.boxSelector || '.mixphotoBox';
     var boxes = document.querySelector(containerSelector).querySelectorAll(boxSelector);
@@ -28,28 +36,31 @@
     // if we need a square for the number 2 images when the length is 3 or 5, then we add a method for them
     if (boxes.length === 3) {
       this.setSquare = function() {
-        var sideLength = parseInt(this.container.clientHeight) / 2
+        var sideLength = parseFloat(this.container.clientHeight) / 2;
         boxes[0].style.width = (this.container.clientWidth - sideLength) + 'px';
         boxes[1].style.height = sideLength + 'px';
         boxes[1].style.width = sideLength + 'px';
         boxes[2].style.height = sideLength + 'px';
         boxes[2].style.width = sideLength + 'px';
-      }
+      };
     } else if (boxes.length === 5) {
       this.setSquare = function() {
-        var sideLength = parseInt(this.container.clientWidth / 3);
-        boxes[0].style.width = parseInt(this.container.clientWidth - sideLength) + 'px';
+        var sideLength = parseFloat(this.container.clientWidth / 3);
+        boxes[0].style.width = parseFloat(this.container.clientWidth - sideLength) + 'px';
         boxes[1].style.width = sideLength + 'px';
         boxes[1].style.height = sideLength + 'px';
         boxes[2].style.width = sideLength + 'px';
-        boxes[2].style.height = parseInt(this.container.clientHeight - sideLength) + 'px';
-      }
+        boxes[2].style.height = parseFloat(this.container.clientHeight - sideLength) + 'px';
+      };
     }
 
     // init the mixphoto
     this.init(boxes.length);
-    if (this.setSquare) this.setSquare()
-  }
+  };
+
+  /**
+    * @desc Plugin prototype definition.
+    */
 
   Mixphoto.prototype = {
 
@@ -60,9 +71,10 @@
 
     init: function(imageNum) {
       this.container.className += ' mixphoto-' + imageNum;
+      if (this.setSquare) this.setSquare();
     }
 
-  }
+  };
 
   return Mixphoto;
 }));
