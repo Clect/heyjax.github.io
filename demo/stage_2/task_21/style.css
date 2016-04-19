@@ -60,7 +60,8 @@ input:focus {
   text-align: center;
   line-height: 150px;
 }
-.tagContainer>div:hover {
+.tagContainer>div:hover,
+.hobbyContainer>div:hover {
   background-color: lightgreen;
 }
 @-webkit-keyframes fadein {

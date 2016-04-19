@@ -10,10 +10,10 @@ var createTag = (function() {
     // 特权方法
     this.getNumber = function() {
       return number;
-    }
+    };
     this.setNumber = function(newNumber) {
       number = newNumber;
-    }
+    };
     // 公有属性
     this.input = document.getElementById(input);
     this.output = document.getElementsByClassName(output)[0];
@@ -28,7 +28,7 @@ var createTag = (function() {
           var value = this.input.value.trim().split(/,|，|、|\s|\n|\r|\t/);
       }
       return value;
-    }
+    };
     this.render = function(value) {
       if (value === '' || value === ',' || value === '，') {
         return ;
@@ -37,7 +37,7 @@ var createTag = (function() {
       wrap.textContent = value;
       this.output.appendChild(wrap);
       number ++;
-    }
+    };
     // 构造器
     this.setNumber(0);
   }
@@ -58,7 +58,7 @@ var createTag = (function() {
       this.output.removeChild(ele);
       this.setNumber(this.output.children.length);
     }
-  }
+  };
   // 返回类
   return _tag;
 })();
@@ -82,16 +82,16 @@ function init() {
         tag.delData(tag.output.firstChild);
       }
     }
-  })
+  });
   tag.output.addEventListener('mouseover',function(event) {
     event.target.textContent = '删除：' + event.target.textContent;
-  })
+  });
   tag.output.addEventListener('mouseout',function(event) {
     event.target.textContent = event.target.textContent.replace(/删除：/,'');
-  })
+  });
   tag.output.addEventListener('click', function(event) {
     tag.delData(event.target);
-  })
+  });
   button.addEventListener('click',function() {
     for (var i = 0; i < hobby.getData().length; i++) {
       hobby.repeatData(hobby.getData()[i]) || hobby.render(hobby.getData()[i]);
@@ -100,7 +100,16 @@ function init() {
       }
     }
     hobby.input.value = '';
-  })
+  });
+  hobby.output.addEventListener('mouseover',function(event) {
+    event.target.textContent = '删除：' + event.target.textContent;
+  });
+  hobby.output.addEventListener('mouseout',function(event) {
+    event.target.textContent = event.target.textContent.replace(/删除：/,'');
+  });
+  hobby.output.addEventListener('click', function(event) {
+    hobby.delData(event.target);
+  });
 }
 
 init();
