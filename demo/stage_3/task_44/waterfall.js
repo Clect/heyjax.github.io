@@ -2,7 +2,8 @@
   *
   * Waterfall v0.0.1
   * Description, by StevenYu.
-  *
+  * @desc use with waterfall.css or just set .waterfallColumn {float: left;}
+  * @author StevenYu
   */
 
 ;(function (root, factory) {
@@ -111,4 +112,5 @@
   }
 
   return Waterfall;
+  
 }));
