@@ -85,8 +85,8 @@
       var i;
 
       // compare the total width with the container width
-      // if the total width id grater than container width
-      // than push to the row array which include the number and the height
+      // if the total width is grater than container width
+      // than push to the row array which include the number and height
       // clear data and loop again until end
       for (i = 0; i < this.boxes.length; i++) {
         this.boxes[i].style.height = height + 'px';
@@ -96,11 +96,11 @@
           totalWidth = width - this.boxes[i].clientWidth;
           ratio = height / totalWidth;
           totalHeight = this.container.clientWidth * ratio;
-          rows.push({number: i-1,height: totalHeight});
+          rows.push({number: i-1, height: totalHeight});
           width = this.boxes[i].clientWidth;
         }
       }
-      rows.push({number: i,height: 200});
+      rows.push({number: i, height: 200});
       return rows;
     },
 
