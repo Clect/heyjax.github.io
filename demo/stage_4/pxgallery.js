@@ -30,10 +30,10 @@
 
     
     opts = opts || {};
-    var containerSelector = opts.containerSelector || '.pxgalleryContainer';
     
+    this.containerSelector = opts.containerSelector || '.pxgalleryContainer';
     this.boxSelector = opts.boxSelector || '.pxgalleryBox';  
-    this.container = document.querySelector(containerSelector);
+    this.container = document.querySelector(this.containerSelector);
         
     this.layout = {
       PUZZLE: 1,    // puzzle layout
@@ -58,7 +58,9 @@
     }
     
     var layout = opts.layout; 
-    
+    this.addImage(image);
+    console.log(layout);
+    this.setLayout(layout);
   };
   
   /**
@@ -67,7 +69,8 @@
    */
   
   pxgallery.prototype.getImageDomElements = function() {
-    var boxes = this.container.querySelectorAll(this.boxSelector);
+    
+    var boxes = Array.prototype.slice.call(this.container.querySelectorAll(this.boxSelector));
     return boxes;
   };
   
@@ -77,8 +80,10 @@
    */
   
   pxgallery.prototype.addImage = function(image) {
-    for (var i = 0; i < image.length; i++) {
-      var imageHtml = '<div class="' + layout.toLowerCase() + 'box"><img src="' + image[i] + '"></div>';
+    
+    var html = '';
+    for (var i = 0; i < image.length; i++) { 
+      var imageHtml = '<div class="pxgalleryBox"><img src=' + image[i] + '></div>';
       html += imageHtml;
     }
     this.container.innerHTML += html;
@@ -90,6 +95,7 @@
    */
   
   pxgallery.prototype.removeImage = function(image) {
+    
     var boxes = this.getImageDomElements();
     boxes =  boxes.filter(function(item) {
       return image.indexOf(item) === -1;
@@ -100,40 +106,27 @@
   
   pxgallery.prototype.setLayout = function(layout) {
     
-  function setSquare () {
-    var boxes = this.getImageDomElements();
-    // if we need a square for the number 2 images when the length is 3 or 5, then we add a method for them
-    if (boxes.length === 3) {
-      this.setSquare = function() {
-        var sideLength = parseFloat(this.container.clientHeight) / 2;
-        boxes[0].style.width = (this.container.clientWidth - sideLength) + 'px';
-        boxes[1].style.height = sideLength + 'px';
-        boxes[1].style.width = sideLength + 'px';
-        boxes[2].style.height = sideLength + 'px';
-        boxes[2].style.width = sideLength + 'px';
-      };
-    } else if (boxes.length === 5) {
-      this.setSquare = function() {
-        var sideLength = parseFloat(this.container.clientWidth / 3);
-        boxes[0].style.width = parseFloat(this.container.clientWidth - sideLength) + 'px';
-        boxes[1].style.width = sideLength + 'px';
-        boxes[1].style.height = sideLength + 'px';
-        boxes[2].style.width = sideLength + 'px';
-        boxes[2].style.height = parseFloat(this.container.clientHeight - sideLength) + 'px';
-      };
-    }
-  }
-    
+    var boxes = this.getImageDomElements(); 
+      
     switch (layout) {
-    case 'PUZZLE':
-      this.container.className += 'puzzle-' + boxes.length;
-      setSquare();
+      
+      case 'PUZZLE':
+      this.container.className = this.containerSelector.slice(1) + ' puzzle-' + boxes.length;
+      this.setPuzzleSquare(boxes.length);
       break;
-    case 'WATERFALL':
-      this.container.className += 'waterfall';
+        
+      case 'WATERFALL':
+      this.container.className = this.containerSelector.slice(1) + ' waterfall';
+      this.setWaterfallColumn(3);
+      for (var i = 0; i < boxes.length; i++) {
+          var box = boxes[i];
+          this.addBox(box, 'columns', this.getWaterfallHeightMin());
+        }
       break;
-    case 'BARREL':
-      this.container.className += 'barrel';
+      
+      case 'BARREL':
+      this.container.className = this.containerSelector.slice(1) + ' barrel';
+      
       break;
     }
   };
@@ -154,7 +147,65 @@
     
   };
   
-  pxgallery.prototype.setBarrelBin = function() {
+  /**
+   * @desc set the 2nd image square
+   * @param {number} length -the number of the images
+   */
+  
+  pxgallery.prototype.setPuzzleSquare = function(length) {
+    
+    var boxes = this.getImageDomElements();
+    if (length === 3) {
+      var sideLength = parseFloat(this.container.clientHeight) / 2;
+      boxes[0].style.width = (this.container.clientWidth - sideLength) + 'px';
+      boxes[1].style.height = sideLength + 'px';
+      boxes[1].style.width = sideLength + 'px';
+      boxes[2].style.height = sideLength + 'px';
+      boxes[2].style.width = sideLength + 'px';
+    } else if (length === 5) {
+      var sideLength = parseFloat(this.container.clientWidth / 3);
+      boxes[0].style.width = parseFloat(this.container.clientWidth - sideLength) + 'px';
+      boxes[1].style.width = sideLength + 'px';
+      boxes[1].style.height = sideLength + 'px';
+      boxes[2].style.width = sideLength + 'px';
+      boxes[2].style.height = parseFloat(this.container.clientHeight - sideLength) + 'px';
+    } else {
+      return;
+    }
+  }
+  
+  pxgallery.prototype.setWaterfallColumn = function(columnNum) {
+    // create column div
+    this.columns = [];
+    for (var i = 0; i < columnNum; i++) {
+      var columnDiv = document.createElement('div');
+      columnDiv.style.width = (100/columnNum) + '%';
+      columnDiv.setAttribute('class','waterfallColumn');
+      this.columns.push(columnDiv);
+      this.container.appendChild(columnDiv);
+    }
+  };
+  
+  pxgallery.prototype.getWaterfallHeightMin = function() {
+    
+    var min = this.columns[0].clientHeight;
+    var index = 0;
+    for (var i = 0; i < this.columns.length; i++) {
+      if (this.columns[i].clientHeight < min) {
+        min = this.columns[i].clientHeight;
+        index = i;
+      }
+    }
+    return index;
+  };
+  
+  pxgallery.prototype.addBox = function(ele, container, index) {
+    
+    var container = (container === 'columns') ? this.columns : this.rows;
+    container[index].appendChild(ele);
+  }
+  
+  pxgallery.prototype.setBarrelBin = function(min, max) {
     
   };
   
