@@ -1,0 +1,124 @@
+body {
+  margin: 0;
+  font-family: Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
+  font-size: 14px;
+}
+
+/* custom styles */
+.puzzleContainer-1,
+.puzzleContainer-2,
+.puzzleContainer-3,
+.puzzleContainer-4,
+.puzzleContainer-5,
+.puzzleContainer-6 {
+  width: 1000px;
+  height: 400px;
+  margin: 0 auto;
+  position: relative;
+}
+.puzzleBox {
+  position: relative;
+}
+.puzzleBox .content{
+  position: absolute;
+  bottom: 0px;
+  color: white;
+}
+/* puzzle styles*/
+.puzzleBox img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+/* for one image box selected */
+.puzzle-1 .puzzleBox {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+/* for two image boxes selected */
+.puzzle-2 .puzzleBox:nth-child(1) {
+  position: absolute;
+  left: 0;
+  width: 66.6%;
+  height: 100%;
+  clip-path: url('clipPath.svg#clip1');
+  -webkit-clip-path: polygon(0% 0%,100% 0%,50% 100%,0% 100%);
+
+}
+.puzzle-2 .puzzleBox:nth-child(2) {
+  position: absolute;
+  right: 0;
+  width: 66.6%;
+  height: 100%;
+  left: 33.333%;
+  clip-path: url('clipPath.svg#clip2');
+  -webkit-clip-path: polygon(50% 0%,100% 0%,100% 100%,0% 100%);
+}
+.puzzle-2 .puzzleBox:nth-child(2) .content{
+  right: 0;
+}
+/* for three image boxes selected */
+.puzzle-3 .puzzleBox:nth-child(1) {
+  float: left;
+  width: 66.6%;
+  height: 100%;
+}
+.puzzle-3 .puzzleBox:nth-child(2) {
+  float: left;
+  width: 33.4%;
+  height: 50%;
+}
+.puzzle-3 .puzzleBox:nth-child(3) {
+  float: left;
+  width: 33.4%;
+  height: 50%;
+}
+/* for four image boxes selected */
+.puzzle-4 .puzzleBox {
+  float: left;
+  width: 50%;
+  height: 50%;
+}
+/* for five image boxes selected */
+.puzzle-5 .puzzleBox:nth-child(1) {
+  float: left;
+  width: 66.6%;
+  height: 66.6%;
+}
+.puzzle-5 .puzzleBox:nth-child(2) {
+  float: right;
+  width: 33.4%;
+}
+.puzzle-5 .puzzleBox:nth-child(3),
+.puzzle-5 .puzzleBox:nth-child(4),
+.puzzle-5 .puzzleBox:nth-child(5) {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 33.3%;
+  height: 33.4%;
+}
+.puzzle-5 .puzzleBox:nth-child(4) {
+  left: 33.3%;
+}
+.puzzle-5 .puzzleBox:nth-child(5) {
+  left: 0;
+}
+/* for six image boxex selected */
+.puzzle-6 .puzzleBox {
+  float: left;
+  width: 33.3%;
+  height: 33.3%;
+}
+.puzzle-6 .puzzleBox:nth-child(1) {
+  width: 66.6%;
+  height: 66.6%;
+}
+.puzzle-6 .puzzleBox:nth-child(2),
+.puzzle-6 .puzzleBox:nth-child(3),
+.puzzle-6 .puzzleBox:nth-child(4) {
+  float: right;
+  width: 33.4%;
+}
