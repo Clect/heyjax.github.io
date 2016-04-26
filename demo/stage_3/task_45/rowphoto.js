@@ -71,6 +71,8 @@
 
     /**
       * @desc calculate the rows according to the minium height
+      * @param {Number} min - the min number of the images
+      * @param {Number} max - the max number of the images
       * @return {Array} rows -object including the number of rows and the height of the rows
       */
 
