@@ -53,7 +53,7 @@
 
     compose: function() {
 
-      var rows = this.calcRow();
+      var rows = this.calcRow(3, 6);
       var index = 0;
       var i;
 
@@ -74,16 +74,17 @@
       * @return {Array} rows -object including the number of rows and the height of the rows
       */
 
-    calcRow: function() {
+    calcRow: function(min, max) {
 
       var height = this.rowMinHeight.slice(0,-2);
       var rows = [];
       var width = 0;
+      var count = 0; 
       var ratio;
       var totalWidth;
       var totalHeight;
       var i;
-
+      
       // compare the total width with the container width
       // if the total width is grater than container width
       // than push to the row array which include the number and height
@@ -92,12 +93,14 @@
         this.boxes[i].style.height = height + 'px';
         this.boxes[i].style.width = (height * this.boxes[i].ratio) + 'px';
         width += height * this.boxes[i].ratio;
-        if (width > this.container.clientWidth) {
+        count++;
+        if ((width > this.container.clientWidth && count > min) || count > max) {
           totalWidth = width - this.boxes[i].clientWidth;
           ratio = height / totalWidth;
           totalHeight = this.container.clientWidth * ratio;
           rows.push({number: i-1, height: totalHeight});
           width = this.boxes[i].clientWidth;
+          count = 1;
         }
       }
       rows.push({number: i, height: 200});
