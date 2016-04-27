@@ -43,17 +43,23 @@
       WATERFALL: 2, // waterfall layout
       BARREL: 3     // barrel layout
     };
- 
+    
   };
   
   /** 
    * @private 
    */
-  
-   var _layout;
-   var _column;
-   var _gutter;
-   var _fullscreenState;
+   var _options = {
+     layout : '',
+     coulumn : '',
+     binMax : '',
+     binMin : '',
+     heightMax : '',
+     heightMin : '',
+     gutter : '',
+     fullscreenState : ''
+   }   
+   
    // create a fullscreen for images
    var _createFullscreen = function(event) {
      var div = document.createElement('div');
@@ -67,9 +73,19 @@
      this.parentNode.appendChild(div);
    };
    // add the box into column or row
-   var _addBox = function(_this, ele, container, index) {
-    var container = (container === 'columns') ? _this.columns : _this.rows;
-    container[index].appendChild(ele);
+   var _addBox = function(ele, index) {
+    switch (_options.layout) {
+      case 1:
+      this.container.appendChild(ele);
+      this.setLayout(1);
+      break;
+      case 2:
+      this.columns[index].appendChild(ele);
+      break;
+      case 3:
+      this.rows ? this.rows[index].appendChild(ele) : this.container.appendChild(ele);
+      break;
+    }
   }
    
    
@@ -87,23 +103,25 @@
       return;
     }
     
-    _layout = opts.layout || 2; 
-    _fullscreenState = opts.fullscreenState || false;
-    _column = opts.column || 3;
+    _options.layout = opts.layout || 2; 
+    _options.fullscreenState = opts.fullscreenState || false;
+    _options.column = opts.column || 3;
+    _options.binMin = opts.binMin || 3;
+    _options.binMax = opts.binMax || 6;
+    _options.heightMin = opts.heightMin || 200;
+    _options.heightMax = opts.heightMax || 300;
     var _this = this;
-
-    this.addImage(image);
-    this.setLayout(_layout)
     
-    if (_fullscreenState) {
-      this.enableFullscreen();
-    } else {
-      this.disableFullscreen();
+    this.setLayout(_options.layout);
+    this.addImage(image);
+    _options.fullscreenState ? this.enableFullscreen() : this.disableFullscreen();
+    
+    window.onload = function() {
+      _this.setLayout(_options.layout);
     }
-    if (_layout === 3) {
-      window.onload = function() {
-        _this.setLayout(_layout);
-      }  
+    
+    window.onresize = function() {
+      _this.setLayout(_options.layout);
     }
   };
   
@@ -132,26 +150,16 @@
       this.setImage([image]);
       return;
     }
+    if (_options.layout === 2) var index = this.getWaterfallHeightMin();
+    if (_options.layout === 3) var index = (this.rows.length - 1);
     
-    if (_layout === 1 || _layout === 3 ) {
-      var html = '';
-      for (var i = 0; i < image.length; i++) { 
-        var imageHtml = '<div class="pxgalleryBox"><img src=' + image[i] + '></div>';
-        html += imageHtml;
-      }
-      this.container.innerHTML += html;
-      // this.setLayout(1);
-    } 
-    
-    if (_layout === 2) {
-      for (var i = 0; i < image.length; i++) {
-        var div = document.createElement('div');
-        var img = document.createElement('img');
-        div.className = 'pxgalleryBox';
-        img.setAttribute('src', image[i]);
-        div.appendChild(img);
-        _addBox(this, div, 'columns', this.getWaterfallHeightMin());
-      }
+    for (var i = 0; i < image.length; i++) { 
+      var div = document.createElement('div');
+      var img = document.createElement('img');
+      div.className = 'pxgalleryBox';
+      img.setAttribute('src', image[i]);
+      div.appendChild(img);
+      (_options.layout === 2 || _options.layout === 3 ) ? _addBox.call(this, div, index) : _addBox.apply(this, [div]);
     }
   };
   
@@ -175,7 +183,7 @@
     
     var boxes = this.getImageDomElements(); 
     this.clearLayout();
-    _layout = layoutValue;
+    _options.layout = layoutValue;
     
     switch (layoutValue) {
       
@@ -193,30 +201,30 @@
         
       case 2:
       this.container.className = this.containerSelector.slice(1) + ' waterfall';
-      this.initWaterfallColumn(_column);
+      this.initWaterfallColumn(_options.column);
       for (var i = 0; i < boxes.length; i++) {
-        _addBox(this, boxes[i], 'columns', this.getWaterfallHeightMin());
+        _addBox.call(this, boxes[i], this.getWaterfallHeightMin());
       }   
       break;
       
       case 3:
       this.container.className = this.containerSelector.slice(1) + ' barrel';
-      var rows = this.calcBarrelBin(3, 6);
+      var rows = this.setBarrelBin(_options.binMin, _options.binMax);
       this.initBarrelBin(rows);
       var index = 0;
       for (var i = 0; i < boxes.length; i++) {
         if (i > rows[index].number) index ++;
         boxes[i].style.height = '100%';
         boxes[i].style.width = '';
-        _addBox(this, boxes[i], 'rows', index);
+        _addBox.call(this, boxes[i], index);
       }
       break;
     }
   };
   
   pxgallery.prototype.getLayout = function() {
-    return _layout;
-  }
+    return _options.layout;
+  };
   
   pxgallery.prototype.clearLayout = function() {
     
@@ -244,20 +252,20 @@
         this.container.appendChild(boxes[j]);
       }  
     }
-    _layout = 0; 
-  }
+    _options.layout = 0; 
+  };
   
   pxgallery.prototype.setGutter = function() {
     
   };
   
   pxgallery.prototype.enableFullscreen = function() {
-    _fullscreenState = true;
+    _options.fullscreenState = true;
     this.container.addEventListener('click', _createFullscreen, false);
   };
   
   pxgallery.prototype.disableFullscreen = function() {
-    _fullscreenState = false;
+    _options.fullscreenState = false;
     this.container.removeEventListener('click', _createFullscreen, false);
   };
   
@@ -266,7 +274,7 @@
    */
   
   pxgallery.prototype.isFullscreenEnabled = function() {
-    return _fullscreenState;
+    return _options.fullscreenState;
   };
   
   /**
@@ -294,12 +302,12 @@
     } else {
       return;
     }
-  }
+  };
   
   pxgallery.prototype.setColumnNum = function(columnNum) {
-    _column = columnNum;
+    _options.column = columnNum;
     this.setLayout(2);
-  }
+  };
   
   pxgallery.prototype.initWaterfallColumn = function(columnNum) {
     // create column div
@@ -331,23 +339,25 @@
     this.rows = [];
     for (var i = 0; i < row.length; i++) {
       var rowDiv = document.createElement('div');
-      rowDiv.className = 'rowphotoRow';
+      rowDiv.className = 'barrelRow';
       rowDiv.style.height = row[i].height + 'px';
       this.rows.push(rowDiv);
       this.container.appendChild(rowDiv);
     }
-  }
+  };
   
-  pxgallery.prototype.calcBarrelBin = function(min, max) {
+  pxgallery.prototype.setBarrelBin = function(min, max) {
     
     var boxes = this.getImageDomElements();
-    var height = 200;
+    var height = _options.heightMin;
     var rows = [];
     var width = 0;
     var count = 0; 
     var ratio;
     var totalWidth;
     var totalHeight;
+    var restWidth;
+    var lastHeight;
     var i;
     
     // compare the total width with the container width
@@ -363,35 +373,55 @@
         totalWidth = width - boxes[i].clientWidth;
         ratio = height / totalWidth;
         totalHeight = this.container.clientWidth * ratio;
+        // if (totalHeight < _options.heightMin) {
+        //   totalHeight = _options.heightMin;
+        //   totalWidth = totalHeight / ratio;
+        // }
+        // if (totalHeight > _options.heightMax) {
+        //   totalHeight = _options.heightMax;
+        //   totalWidth = totalHeight / ratio;
+        // }
         rows.push({number: i-1, height: totalHeight});
         width = boxes[i].clientWidth;
         count = 1;
       }
+      ratio = height / width;
+      lastHeight =  this.container.clientWidth * ratio;
+      // if (lastHeight < _options.heightMin) {
+      //     lastHeight = _options.heightMin;
+      //     totalWidth = lastHeight / ratio;
+      //   }
+      // if (lastHeight > _options.heightMax) {
+      //   lastHeight = _options.heightMax;
+      //   totalWidth = lastHeight / ratio;
+      // }
     }
-    rows.push({number: i, height: 200});
+    rows.push({number: i, height: lastHeight});
 
     return rows;
 
-  }
-  
-  pxgallery.prototype.setBarrelBin = function(min, max) {
-    
+  };
+
+  pxgallery.prototype.getBarrelBinMax = function() {
+    return _options.binMax;
   };
   
-  pxgallery.prototype.getBarrelBin = function() {
-    
+  pxgallery.prototype.getBarrelBinMin = function() {
+    return _options.binMin;
   };
   
   pxgallery.prototype.setBarrelHeight = function(min, max) {
-    
+    _options.heightMin = min;
+    _options.heightMax = max;
+    if (_options.layout === 3) this.setLayout(3);
   };  
   
   pxgallery.prototype.getBarrelHeightMax = function() {
-    
+    return _options.heightMax;
   };
   
   pxgallery.prototype.getBarrelHeightMin = function() {
-    
+    return _options.heightMin;
   };
 
   return pxgallery;
