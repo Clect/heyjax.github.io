@@ -1,0 +1,40 @@
+header {
+  height: 3rem;
+  background-color: $nav_gray;
+  color: $gray;
+  font-size: 1rem;
+  line-height: 3rem;
+  position: relative;
+  
+  span {
+    position: absolute;
+    left: 1rem;  
+    font-weight: bold;
+  }
+  
+  ul.menu{
+    text-align: center;
+    li {
+      list-style: none;
+      display: inline-block;
+      width: 5rem; 
+      a {
+        display: block;
+        @include hover; 
+      }
+    }
+  }
+  ul.submenu {
+    position: absolute;
+    
+    li {
+      width: 10rem;
+      display: block;
+      color: $white;
+      background-color: $nav_gray;
+      cursor: pointer;
+      @include hover;
+    }
+  }
+  
+}

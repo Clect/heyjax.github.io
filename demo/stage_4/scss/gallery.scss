@@ -1,0 +1,18 @@
+
+main{
+  padding-top: 5rem;
+  
+  .location {
+    padding-bottom: 5rem;
+    
+    ul {
+      padding-left: 3rem;
+      
+      li {
+        display: inline-block;
+        font-size: 2rem;
+        font-weight: lighter;
+      }
+    }
+  }
+}

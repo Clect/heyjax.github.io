@@ -7,7 +7,7 @@ body {
 /* custom styles */
 .pxgalleryContainer {
   width: 80%;
-  height: 400px;
+  height: 800px;
   margin: 0 auto;
   position: relative;
   /*overflow: hidden;*/
@@ -36,8 +36,6 @@ body {
 }
 /* for one image box selected */
 .puzzle-1 .pxgalleryBox {
-  width: 100%;
-  height: 100%;
   overflow: hidden;
 }
 /* for two image boxes selected */
@@ -46,7 +44,7 @@ body {
   left: 0;
   width: 66.6%;
   height: 100%;
-  clip-path: url('clipPath.svg#clip1');
+  clip-path: url('../img/clipPath.svg#clip1');
   -webkit-clip-path: polygon(0% 0%,100% 0%,50% 100%,0% 100%);
 
 }
@@ -56,7 +54,7 @@ body {
   width: 66.6%;
   height: 100%;
   left: 33.333%;
-  clip-path: url('clipPath.svg#clip2');
+  clip-path: url('../img/clipPath.svg#clip2');
   -webkit-clip-path: polygon(50% 0%,100% 0%,100% 100%,0% 100%);
 }
 .puzzle-2 .pxgalleryBox:nth-child(2) .content{
@@ -85,29 +83,37 @@ body {
   height: 50%;
 }
 /* for five image boxes selected */
+.puzzle-5 .pxgalleryBox {
+  position: absolute;
+}
 .puzzle-5 .pxgalleryBox:nth-child(1) {
-  float: left;
+  top: 0;
+  left: 0;
   width: 66.6%;
   height: 66.6%;
 }
 .puzzle-5 .pxgalleryBox:nth-child(2) {
-  float: right;
+  top: 0;
+  right: 0;
   width: 33.4%;
 }
-.puzzle-5 .pxgalleryBox:nth-child(3),
-.puzzle-5 .pxgalleryBox:nth-child(4),
-.puzzle-5 .pxgalleryBox:nth-child(5) {
-  position: absolute;
+.puzzle-5 .pxgalleryBox:nth-child(3) {
   bottom: 0;
   right: 0;
   width: 33.3%;
   height: 33.4%;
 }
 .puzzle-5 .pxgalleryBox:nth-child(4) {
-  left: 33.3%;
+  bottom: 0;
+  left: 33.333%;
+  width: 33.333%;
+  height: 33.4%;
 }
 .puzzle-5 .pxgalleryBox:nth-child(5) {
+  bottom: 0;
   left: 0;
+  width: 33.333%;
+  height: 33.4%;
 }
 /* for six image boxex selected */
 .puzzle-6 .pxgalleryBox {
@@ -140,9 +146,7 @@ body {
   /*overflow: hidden;*/
 }
 .barrel .pxgalleryBox {
-  box-sizing: border-box;
   display: inline-block;
-  position: relative;
 }
 .barrel img {
   height: 100%;

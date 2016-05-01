@@ -3,26 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>HeyJax</title>
-    <link rel="stylesheet" href="pxgallery.css">
+    <!--<link rel="stylesheet" href="pxgallery.css">-->
+    <!--inject:css-->
+    <link rel="stylesheet" href="css/main.min.css">
+    <!--endinject-->
 </head>
 <body>
-    <div class="pxgalleryContainer"></div>
-    <script src="pxgallery.js"></script>
-    <script>
-
-        var a = new pxgallery();
-        a.setImage([
-            "http://placehold.it/1300x1600/E97452/fff",
-            "http://placehold.it/1300x1300/4C6EB4/fff",
-            "http://placehold.it/1300x1250/449F93/fff",
-            "http://placehold.it/800x400/936FBC/fff",
-            "http://placehold.it/1000x500/D25064/fff",
-            "http://placehold.it/1300x1200/CF364A/fff"
-        ],
-        {
-            layout: 3,
-            fullscreenState: true
-        });
-    </script>
+    <header class="row">
+        <span>PXGallery</span>
+        <nav>
+            <ul class="menu">
+                <li><a href="#">Upload</a></li>
+                <li><a href="#">Organize</a></li>
+                <li id="customize"><a href="#">Customize</a></li>
+                <ul class="submenu hidden">
+                    <li data-layout="puzzle">Puzzle layout</li>
+                    <li data-layout="waterfall">Waterfall layout</li>
+                    <li data-layout="barrel">Barrel layout</li>
+                </ul>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="location">
+            <ul>
+                <li>Home</li>
+                <li> > MyGallery</li>
+            </ul>
+        </section>
+        <div class="pxgalleryContainer"></div> 
+    </main>
+    <footer>
+        <a href="#"><span id="github">Github</span></a>
+        <a href="#top"><span id="backtotop">BackToTop</span></a>    
+    </footer>
+    <script src="js/pxgallery.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

@@ -41,7 +41,8 @@
       NONE: 0,      // no layout
       PUZZLE: 1,    // puzzle layout
       WATERFALL: 2, // waterfall layout
-      BARREL: 3     // barrel layout
+      BARREL: 3,    // barrel layout
+      SQUARE: 4     // square layout
     };
     
   };
@@ -51,6 +52,7 @@
    */
    var _options = {
      layout : '',
+     puzzleHeight:'',
      coulumn : '',
      binMax : '',
      binMin : '',
@@ -104,11 +106,12 @@
     }
     
     _options.layout = opts.layout || 2; 
+    _options.puzzleHeight = opts.puzzleHeight || 400;
     _options.fullscreenState = opts.fullscreenState || false;
     _options.column = opts.column || 3;
     _options.binMin = opts.binMin || 3;
     _options.binMax = opts.binMax || 6;
-    _options.heightMin = opts.heightMin || 200;
+    _options.heightMin = opts.heightMin || 150;
     _options.heightMax = opts.heightMax || 300;
     var _this = this;
     
@@ -147,7 +150,7 @@
   pxgallery.prototype.addImage = function(image) {
         
     if (typeof image === 'string') {
-      this.setImage([image]);
+      this.addImage([image]);
       return;
     }
     if (_options.layout === 2) var index = this.getWaterfallHeightMin();
@@ -155,9 +158,9 @@
     
     for (var i = 0; i < image.length; i++) { 
       var div = document.createElement('div');
-      var img = document.createElement('img');
+      var img = new Image();
       div.className = 'pxgalleryBox';
-      img.setAttribute('src', image[i]);
+      img.src = image[i];
       div.appendChild(img);
       (_options.layout === 2 || _options.layout === 3 ) ? _addBox.call(this, div, index) : _addBox.apply(this, [div]);
     }
@@ -194,7 +197,8 @@
       if (boxes.length > 6) {
         console.error('PUZZLE layout only can contain 6 photos'); 
         break;
-      } 
+      }
+      this.container.style.height = _options.puzzleHeight + 'px'; 
       this.container.className = this.containerSelector.slice(1) + ' puzzle-' + boxes.length;
       this.setPuzzleSquare(boxes.length);
       break;
@@ -209,7 +213,7 @@
       
       case 3:
       this.container.className = this.containerSelector.slice(1) + ' barrel';
-      var rows = this.setBarrelBin(_options.binMin, _options.binMax);
+      var rows = this.setBarrelBin();
       this.initBarrelBin(rows);
       var index = 0;
       for (var i = 0; i < boxes.length; i++) {
@@ -230,7 +234,8 @@
     
     var boxes = this.getImageDomElements();
     this.container.className = this.containerSelector.slice(1);
-
+    this.container.style.height = '';
+    
     for (var i = 0; i < boxes.length; i++) {
       boxes[i].style.width = '';
       boxes[i].style.height = '';
@@ -306,7 +311,7 @@
   
   pxgallery.prototype.setColumnNum = function(columnNum) {
     _options.column = columnNum;
-    this.setLayout(2);
+    if (_options.layout === 2) this.setLayout(2);
   };
   
   pxgallery.prototype.initWaterfallColumn = function(columnNum) {
@@ -357,7 +362,6 @@
     var totalWidth;
     var totalHeight;
     var restWidth;
-    var lastHeight;
     var i;
     
     // compare the total width with the container width
@@ -369,34 +373,16 @@
       boxes[i].style.width = (height * boxes[i].ratio) + 'px';
       width += height * boxes[i].ratio;
       count ++;
-      if ((width > this.container.clientWidth && count > min) || count > max) {
+      if (width > this.container.clientWidth) {
         totalWidth = width - boxes[i].clientWidth;
         ratio = height / totalWidth;
         totalHeight = this.container.clientWidth * ratio;
-        // if (totalHeight < _options.heightMin) {
-        //   totalHeight = _options.heightMin;
-        //   totalWidth = totalHeight / ratio;
-        // }
-        // if (totalHeight > _options.heightMax) {
-        //   totalHeight = _options.heightMax;
-        //   totalWidth = totalHeight / ratio;
-        // }
         rows.push({number: i-1, height: totalHeight});
         width = boxes[i].clientWidth;
         count = 1;
       }
-      ratio = height / width;
-      lastHeight =  this.container.clientWidth * ratio;
-      // if (lastHeight < _options.heightMin) {
-      //     lastHeight = _options.heightMin;
-      //     totalWidth = lastHeight / ratio;
-      //   }
-      // if (lastHeight > _options.heightMax) {
-      //   lastHeight = _options.heightMax;
-      //   totalWidth = lastHeight / ratio;
-      // }
     }
-    rows.push({number: i, height: lastHeight});
+    rows.push({number: i, height: _options.heightMin});
 
     return rows;
 
