@@ -35,7 +35,10 @@
     // init waterfall
     this.compose();
     // make box in order due to the first init the first column has the highest height
-    setTimeout(this.compose(true),500);
+    var that =this;
+    window.onload = function() {
+      that.compose(true);
+    }
   }
 
   /**
