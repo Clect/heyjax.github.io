@@ -1,19 +1,19 @@
 /**
   *
   * Mixphoto v0.0.1
-  * Description, by StevenYu.
-  * @desc use with mixphoto.css
+  *iption, by StevenYu.
+  * Use with mixphoto.css
   * @author StevenYu
   */
 
 ;(function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define([], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        module.exports = factory();
-    } else {
-        // Browser globals (root is window)
-        root.Mixphoto = factory();
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = factory();
+  } else {
+    // Browser globals (root is window)
+    root.Mixphoto = factory();
   }
 }(this, function() {
 
@@ -59,13 +59,13 @@
   };
 
   /**
-    * @desc Plugin prototype definition.
+    * Plugin prototype definition.
     */
 
   Mixphoto.prototype = {
 
     /**
-      * @desc swtich the different display with css and className according the number
+      * swtich the different display with css and className according the number
       * @param {Number} imageNum
       */
 

@@ -1,19 +1,19 @@
 /**
   *
   * Rowphoto v0.0.1
-  * Description, by StevenYu.
-  * @desc use with rowphoto.css
+   iption, by StevenYu.
+  * use with rowphoto.css
   * @author StevenYu
   */
 
 ;(function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define([], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        module.exports = factory();
-    } else {
-        // Browser globals (root is window)
-        root.Rowphoto = factory();
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = factory();
+  } else {
+    // Browser globals (root is window)
+    root.Rowphoto = factory();
   }
 }(this, function() {
 
@@ -42,13 +42,13 @@
   }
 
   /**
-    * @desc Plugin prototype definition.
+    * Plugin prototype definition.
     */
 
   Rowphoto.prototype = {
 
     /**
-      * @desc compose the Rowphoto
+      * compose the Rowphoto
       */
 
     compose: function() {
@@ -70,7 +70,7 @@
     },
 
     /**
-      * @desc calculate the rows according to the minium height
+      * calculate the rows according to the minium height
       * @param {Number} min - the min number of the images
       * @param {Number} max - the max number of the images
       * @return {Array} rows -object including the number of rows and the height of the rows
@@ -110,7 +110,7 @@
     },
 
     /**
-      * @desc init the rows
+      * init the rows
       * @param {Array} row -object including the number of rows and the height of the rows
       */
 
@@ -126,7 +126,7 @@
     },
 
     /**
-      * @desc add the box to the row
+      * add the box to the row
       * @param {Object} ele - the box element
       * @param {Number} index - the index of the rows
       */

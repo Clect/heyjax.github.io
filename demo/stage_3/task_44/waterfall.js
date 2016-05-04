@@ -1,19 +1,19 @@
 /**
   *
   * Waterfall v0.0.1
-  * Description, by StevenYu.
-  * @desc use with waterfall.css or just set .waterfallColumn {float: left;}
+  *iption, by StevenYu.
+  * use with waterfall.css or just set .waterfallColumn {float: left;}
   * @author StevenYu
   */
 
 ;(function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define([], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        module.exports = factory();
-    } else {
-        // Browser globals (root is window)
-        root['Waterfall'] = factory();
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = factory();
+  } else {
+    // Browser globals (root is window)
+    root['Waterfall'] = factory();
   }
 }(this, function() {
 
@@ -42,13 +42,13 @@
   }
 
   /**
-    * @desc Plugin prototype definition.
+    * Plugin prototype definition.
     */
 
   Waterfall.prototype = {
 
     /**
-      * @desc init columns
+      * init columns
       * @param {Number} columnNum - the numbers of the column
       */
 
@@ -65,7 +65,7 @@
     },
 
     /**
-      * @desc get the index of shortest column
+      * get the index of shortest column
       * @return {Number} index
       */
 
@@ -82,7 +82,7 @@
     },
 
     /**
-      * @desc init columns and add boxes
+      * init columns and add boxes
       * @param {Boolean} force - choose whether to remove the old columns
       */
 
@@ -103,7 +103,7 @@
     },
 
     /**
-      * @desc compose all boxs in column
+      * compose all boxs in column
       * @param - the element which add in the box
       */
 
