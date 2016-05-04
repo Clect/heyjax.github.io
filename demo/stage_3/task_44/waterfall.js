@@ -1,7 +1,7 @@
 /**
   *
   * Waterfall v0.0.1
-  *iption, by StevenYu.
+  * desciption, by StevenYu.
   * use with waterfall.css or just set .waterfallColumn {float: left;}
   * @author StevenYu
   */
@@ -13,7 +13,7 @@
     module.exports = factory();
   } else {
     // Browser globals (root is window)
-    root['Waterfall'] = factory();
+    root.Waterfall = factory();
   }
 }(this, function() {
 

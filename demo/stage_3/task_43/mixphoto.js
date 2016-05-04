@@ -1,7 +1,7 @@
 /**
   *
   * Mixphoto v0.0.1
-  *iption, by StevenYu.
+  * desciption, by StevenYu.
   * Use with mixphoto.css
   * @author StevenYu
   */

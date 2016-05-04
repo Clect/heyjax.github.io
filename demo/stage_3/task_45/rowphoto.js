@@ -1,7 +1,7 @@
 /**
   *
   * Rowphoto v0.0.1
-   iption, by StevenYu.
+  * desciption, by StevenYu.
   * use with rowphoto.css
   * @author StevenYu
   */
