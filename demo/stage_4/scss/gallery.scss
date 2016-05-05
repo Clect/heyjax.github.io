@@ -10,9 +10,14 @@ main{
       
       li {
         display: inline-block;
-        font-size: 2rem;
-        font-weight: lighter;
+        font-size: 1rem;
       }
     }
   }
+  .pxgalleryContainer {
+    .selected {
+      border: 0.85rem solid $light_blue;
+    }
+  }
+  
 }

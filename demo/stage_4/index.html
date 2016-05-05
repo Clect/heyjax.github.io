@@ -14,16 +14,25 @@
         <nav>
             <ul class="menu">
                 <li><a href="#">Upload</a></li>
-                <li><a href="#">Organize</a></li>
-                <li id="customize"><a href="#">Customize</a></li>
-                <ul class="submenu hidden">
-                    <li data-layout="puzzle">Puzzle layout</li>
-                    <li data-layout="waterfall">Waterfall layout</li>
-                    <li data-layout="barrel">Barrel layout</li>
-                </ul>
+                <li id="edit"><a href="#">Edit</a></li>
+                <li id="customize">
+                    <a href="#">Customize</a>
+                    <ul class="submenu hidden">
+                        <li data-layout="puzzle">Puzzle layout</li>
+                        <li data-layout="waterfall">Waterfall layout</li>
+                        <li data-layout="barrel">Barrel layout</li>
+                        <li data-layout="square">Square layout</li>
+                    </ul>
+                </li>
                 <li><a href="#">About</a></li>
             </ul>
         </nav>
+        <section class="edit">
+            <div id="add"><span>Add</span></div>
+            <div id="select"><span>Select</span></div>
+            <div id="remove"><span>Remove</span></div>
+            <div id="count"><span></span></div>
+        </section>
     </header>
     <main>
         <section class="location">

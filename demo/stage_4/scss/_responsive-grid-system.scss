@@ -30,18 +30,18 @@ $grid-columns:      12;
 }
 
 // Set a width (to be used in or out of media queries)
-@mixin make-col-span($columns) {
-  width: percentage(($columns / $grid-columns));
-}
+// @mixin make-col-span($columns) {
+//   width: percentage(($columns / $grid-columns));
+// }
 
-.row {
-  @include make-row();
-}
-.box{
-  @include box;
-}
+// .row {
+//   @include make-row();
+// }
+// .box{
+//   @include box;
+// }
 
-@for $i from 1 through $grid-columns {
-  .col-md-#{$i} { @media only screen and (min-width: 769px) { @include make-col-span($i);@include make-col;} }
-  .col-sm-#{$i} { @media only screen and (max-width: 768px) { @include make-col-span($i);@include make-col;} }
-}
+// @for $i from 1 through $grid-columns {
+//   .col-md-#{$i} { @media only screen and (min-width: 769px) { @include make-col-span($i);@include make-col;} }
+//   .col-sm-#{$i} { @media only screen and (max-width: 768px) { @include make-col-span($i);@include make-col;} }
+// }

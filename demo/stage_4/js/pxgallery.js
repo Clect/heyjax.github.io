@@ -59,6 +59,8 @@
      heightMax : '',
      heightMin : '',
      gutter : '',
+     mdSquareNum:'',
+     smSquareNum:'',
      fullscreenState : ''
    }   
    
@@ -77,16 +79,15 @@
    // add the box into column or row
    var _addBox = function(ele, index) {
     switch (_options.layout) {
-      case 1:
-      this.container.appendChild(ele);
-      this.setLayout(1);
-      break;
       case 2:
       this.columns[index].appendChild(ele);
       break;
       case 3:
       this.rows ? this.rows[index].appendChild(ele) : this.container.appendChild(ele);
       break;
+      default:
+      this.container.appendChild(ele);
+      this.setLayout(_options.layout);
     }
   }
    
@@ -108,11 +109,14 @@
     _options.layout = opts.layout || 2; 
     _options.puzzleHeight = opts.puzzleHeight || 400;
     _options.fullscreenState = opts.fullscreenState || false;
-    _options.column = opts.column || 3;
+    _options.column = opts.column || 5;
     _options.binMin = opts.binMin || 3;
     _options.binMax = opts.binMax || 6;
     _options.heightMin = opts.heightMin || 150;
     _options.heightMax = opts.heightMax || 300;
+    _options.mdSquareNum = opts.mdSquareNum || 6;
+    _options.smSquareNum = opts.smSquareNum || 4;
+    _options.gutter = opts.gutter || 10;
     var _this = this;
     
     this.setLayout(_options.layout);
@@ -136,9 +140,9 @@
   pxgallery.prototype.getImageDomElements = function() {
     
     var boxes = Array.prototype.slice.call(this.container.querySelectorAll(this.boxSelector));
-    for (var i = 0; i < boxes.length; i++) {
-      boxes[i].ratio = boxes[i].clientWidth / boxes[i].clientHeight;
-    }
+    boxes.forEach(function(element) {
+      element.ratio = element.clientWidth / element.clientHeight;
+    }, this);
     return boxes;
   };
   
@@ -160,9 +164,11 @@
       var div = document.createElement('div');
       var img = new Image();
       div.className = 'pxgalleryBox';
+      div.style.paddingRight = _options.gutter + 'px';
+      div.style.paddingBottom = _options.gutter + 'px';
       img.src = image[i];
       div.appendChild(img);
-      (_options.layout === 2 || _options.layout === 3 ) ? _addBox.call(this, div, index) : _addBox.apply(this, [div]);
+      (_options.layout === 2 || _options.layout === 3 ) ? _addBox.call(this, div, index) : _addBox.apply(this, [div]);  
     }
   };
   
@@ -223,6 +229,15 @@
         _addBox.call(this, boxes[i], index);
       }
       break;
+      
+      case 4:
+      this.container.className = this.containerSelector.slice(1) + ' square';
+      for (var i = 0; i < boxes.length; i++) {
+        var md = 'col-md-' + (12 / _options.mdSquareNum);
+        var sm = 'col-sm-' + (12 / _options.smSquareNum);
+        boxes[i].classList.add(md);
+        boxes[i].classList.add(sm);
+      }
     }
   };
   
@@ -233,35 +248,37 @@
   pxgallery.prototype.clearLayout = function() {
     
     var boxes = this.getImageDomElements();
+    var _this = this;
     this.container.className = this.containerSelector.slice(1);
     this.container.style.height = '';
+    boxes.forEach(function(ele) {
+      ele.style.width = '';
+      ele.style.height = '';
+    }, this)
     
-    for (var i = 0; i < boxes.length; i++) {
-      boxes[i].style.width = '';
-      boxes[i].style.height = '';
-    }  
     if (this.columns) {
-      for (var i = 0; i < this.columns.length; i++) {
-        this.columns[i].remove();
-      }
-      for (var j = 0; j < boxes.length; j++) {
-        this.container.appendChild(boxes[j]);
-      }  
+      this.columns.forEach(function(ele) {
+        ele.remove();
+      }, false)
+      boxes.forEach(function(ele) {
+        _this.container.appendChild(ele);
+      }, this)  
     }
     
     if (this.rows) {
-      for (var i = 0; i < this.rows.length; i++) {
-        this.rows[i].remove();
-      }
-      for (var j = 0; j < boxes.length; j++) {
-        this.container.appendChild(boxes[j]);
-      }  
+      this.rows.forEach(function(ele) {
+        ele.remove();
+      }, this)
+      boxes.forEach(function(ele) {
+        _this.container.appendChild(ele);
+      }, this)  
     }
     _options.layout = 0; 
   };
   
-  pxgallery.prototype.setGutter = function() {
-    
+  pxgallery.prototype.setGutter = function(gutter) {
+    _options.gutter = gutter;
+    this.setLayout(_options.layout);
   };
   
   pxgallery.prototype.enableFullscreen = function() {
@@ -299,11 +316,18 @@
       boxes[2].style.width = sideLength + 'px';
     } else if (length === 5) {
       var sideLength = parseFloat(this.container.clientWidth / 3);
-      boxes[0].style.width = parseFloat(this.container.clientWidth - sideLength) + 'px';
-      boxes[1].style.width = sideLength + 'px';
-      boxes[1].style.height = sideLength + 'px';
-      boxes[2].style.width = sideLength + 'px';
-      boxes[2].style.height = parseFloat(this.container.clientHeight - sideLength) + 'px';
+      if (parseInt(sideLength + (_options.gutter * 2)) <  parseInt(_options.puzzleHeight)) {
+        boxes[0].style.width = parseFloat(this.container.clientWidth - sideLength) + 'px';
+        boxes[1].style.width = sideLength + 'px';
+        boxes[1].style.height = sideLength + 'px';
+        boxes[2].style.width = sideLength + 'px';
+        boxes[2].style.height = parseFloat(this.container.clientHeight - sideLength) + 'px';
+      } else {
+        boxes.forEach(function(ele) {
+          ele.style.width = '';
+          ele.style.height= '';
+        }, this);
+      }
     } else {
       return;
     }
