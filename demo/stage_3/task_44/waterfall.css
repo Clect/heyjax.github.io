@@ -11,6 +11,9 @@ header {
   margin: 0;
   text-align: center;
 }
+.github {
+  margin: 10px;
+}
 
 /* display */
 .display {
