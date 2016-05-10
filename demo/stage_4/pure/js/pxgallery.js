@@ -1,8 +1,7 @@
 /**
  *
  * pxgallery v0.0.1
- * Description, by StevenYu.
- * @desc use with pxgallery.css
+ * use with pxgallery.css
  * @author StevenYu
  */
 
@@ -54,33 +53,56 @@
      layout : '',
      puzzleHeight:'',
      coulumn : '',
-     binMax : '',
-     binMin : '',
-     heightMax : '',
      heightMin : '',
      gutter : '',
      mdSquareNum:'',
      smSquareNum:'',
-     fullscreenState : ''
+     fullscreenState : '',
+     images: []
    }   
    
-   // create a fullscreen for images
+   // create a fullscreen for images with next and prev
    var _createFullscreen = function(event) {
-     var div = document.createElement('div');
-     var img = document.createElement('img');
-     div.className = 'pxfullscreen';
-     img.setAttribute('src', event.target.getAttribute('src'));
-     div.addEventListener('click', function() {
-       this.remove();
-     }, false)
-     div.appendChild(img);
-     this.parentNode.appendChild(div);
+     console.log(_options.images);
+     if (event.target.getAttribute('src').trim()) {
+      var fullscreen = document.createElement('div');
+      var img = document.createElement('img');
+      var next = document.createElement('span');
+      var prev = document.createElement('span');
+      var currentImg = event.target.getAttribute('src');
+      var currentImgIndex = _options.images.indexOf(currentImg);
+      fullscreen.className = 'pxfullscreen';
+      next.className = 'pxnext';
+      prev.className = 'pxprev';
+      img.src = currentImg;
+      fullscreen.addEventListener('click', function(event) {
+        if (event.target != next && event.target != prev) {
+        this.remove();
+        }
+      }, false);
+      next.addEventListener('click', function() {
+        currentImgIndex++;
+        if (currentImgIndex >= _options.images.length) currentImgIndex = 0;
+        img.src = _options.images[currentImgIndex]; 
+      }, false);
+      prev.addEventListener('click', function() {
+        currentImgIndex--;
+        if (currentImgIndex <= 0) currentImgIndex = (_options.images.length - 1);
+        img.src = _options.images[currentImgIndex];
+      })
+      
+      fullscreen.appendChild(prev);
+      fullscreen.appendChild(next);
+      fullscreen.appendChild(img);
+      this.parentNode.appendChild(fullscreen);
+     } 
    };
+   
    // add the box into column or row
    var _addBox = function(ele, index) {
     switch (_options.layout) {
       case 2:
-      this.columns[index].appendChild(ele);
+      this.columns ? this.columns[index].appendChild(ele) : this.container.appendChild(ele);
       break;
       case 3:
       this.rows ? this.rows[index].appendChild(ele) : this.container.appendChild(ele);
@@ -93,7 +115,7 @@
    
    
   /**
-   * @desc init the album
+   * init the album
    * It will replace the photos
    * @param {(stirng | string[])} image - the URL of the photo or the URL array of the photos
    * @param {object} opts - layout options
@@ -108,19 +130,16 @@
     
     _options.layout = opts.layout || 2; 
     _options.puzzleHeight = opts.puzzleHeight || 400;
-    _options.fullscreenState = opts.fullscreenState || false;
+    _options.fullscreenState = opts.fullscreenState || true;
     _options.column = opts.column || 5;
-    _options.binMin = opts.binMin || 3;
-    _options.binMax = opts.binMax || 6;
     _options.heightMin = opts.heightMin || 150;
-    _options.heightMax = opts.heightMax || 300;
-    _options.mdSquareNum = opts.mdSquareNum || 6;
-    _options.smSquareNum = opts.smSquareNum || 4;
+    _options.mdSquareNum = opts.mdSquareNum || 3;
+    _options.smSquareNum = opts.smSquareNum || 6;
     _options.gutter = opts.gutter || 10;
     var _this = this;
     
+    this.addImage(image, true);
     this.setLayout(_options.layout);
-    this.addImage(image);
     _options.fullscreenState ? this.enableFullscreen() : this.disableFullscreen();
     
     window.onload = function() {
@@ -133,7 +152,7 @@
   };
   
   /**
-   * @desc get the DOM elements which contain the images
+   * get the DOM elements which contain the images
    * @return {HTMLelement[]} boxes   
    */
   
@@ -147,44 +166,54 @@
   };
   
   /**
-   * @desc add images to the container
+   * add images to the container
    * @param {(string | string[])} image - the URL of the photo or the URL array of the photos
    */
   
-  pxgallery.prototype.addImage = function(image) {
+  pxgallery.prototype.addImage = function(image, raw) {
         
     if (typeof image === 'string') {
       this.addImage([image]);
       return;
     }
+    if (!raw) {
     if (_options.layout === 2) var index = this.getWaterfallHeightMin();
     if (_options.layout === 3) var index = (this.rows.length - 1);
+    }
     
     for (var i = 0; i < image.length; i++) { 
       var div = document.createElement('div');
       var img = new Image();
       div.className = 'pxgalleryBox';
-      div.style.paddingRight = _options.gutter + 'px';
-      div.style.paddingBottom = _options.gutter + 'px';
+      div.style.border = _options.gutter / 2 + 'px solid transparent';
+      // div.style.paddingBottom = _options.gutter + 'px';
       img.src = image[i];
+      _options.images.push(image[i]);
       div.appendChild(img);
-      (_options.layout === 2 || _options.layout === 3 ) ? _addBox.call(this, div, index) : _addBox.apply(this, [div]);  
+      if (!raw) {
+        (_options.layout === 2 || _options.layout === 3 ) ? _addBox.call(this, div, index) : _addBox.apply(this, [div]);  
+      }
+      else {
+        _addBox.apply(this, [div])
+      }
     }
   };
   
   /**
-   * @desc remove the images
+   * remove the images
    * @param {(HTMLelement|HTMLelement[])} image - the images that need to be removed
    */
   
   pxgallery.prototype.removeImage = function(image) {
     
-    image.remove();
+    image.forEach(function(ele) {
+      ele.remove()
+    })
     
   };
   
   /**
-   * @desc set the layout
+   * set the layout
    * @param {number}
    */
   
@@ -233,10 +262,9 @@
       case 4:
       this.container.className = this.containerSelector.slice(1) + ' square';
       for (var i = 0; i < boxes.length; i++) {
-        var md = 'col-md-' + (12 / _options.mdSquareNum);
-        var sm = 'col-sm-' + (12 / _options.smSquareNum);
-        boxes[i].classList.add(md);
-        boxes[i].classList.add(sm);
+        var md = 'col-md-' + _options.mdSquareNum;
+        var sm = 'col-sm-' + _options.smSquareNum;
+        boxes[i].className = this.boxSelector.slice(1) + ' ' + md + ' ' + sm;
       }
     }
   };
@@ -278,7 +306,10 @@
   
   pxgallery.prototype.setGutter = function(gutter) {
     _options.gutter = gutter;
-    this.setLayout(_options.layout);
+    var boxes = this.getImageDomElements()
+    boxes.forEach(function(ele) {
+      ele.style.border = (gutter / 2) +'px solid transparent';
+    })
   };
   
   pxgallery.prototype.enableFullscreen = function() {
@@ -300,7 +331,7 @@
   };
   
   /**
-   * @desc set the 2nd image square
+   * set the 2nd image square
    * @param {number} length -the number of the images
    */
   
@@ -331,6 +362,11 @@
     } else {
       return;
     }
+  };
+  
+  pxgallery.prototype.setPuzzleHeight = function(height) {
+    _options.puzzleHeight = height;
+    if (_options.layout === 1) this.setLayout(_options.layout);
   };
   
   pxgallery.prototype.setColumnNum = function(columnNum) {
@@ -375,7 +411,7 @@
     }
   };
   
-  pxgallery.prototype.setBarrelBin = function(min, max) {
+  pxgallery.prototype.setBarrelBin = function() {
     
     var boxes = this.getImageDomElements();
     var height = _options.heightMin;
@@ -396,14 +432,12 @@
       boxes[i].style.height = height + 'px';
       boxes[i].style.width = (height * boxes[i].ratio) + 'px';
       width += height * boxes[i].ratio;
-      count ++;
       if (width > this.container.clientWidth) {
         totalWidth = width - boxes[i].clientWidth;
         ratio = height / totalWidth;
         totalHeight = this.container.clientWidth * ratio;
         rows.push({number: i-1, height: totalHeight});
         width = boxes[i].clientWidth;
-        count = 1;
       }
     }
     rows.push({number: i, height: _options.heightMin});
@@ -412,27 +446,28 @@
 
   };
 
-  pxgallery.prototype.getBarrelBinMax = function() {
-    return _options.binMax;
-  };
-  
   pxgallery.prototype.getBarrelBinMin = function() {
     return _options.binMin;
   };
   
-  pxgallery.prototype.setBarrelHeight = function(min, max) {
+  pxgallery.prototype.setBarrelHeight = function(min) {
     _options.heightMin = min;
-    _options.heightMax = max;
     if (_options.layout === 3) this.setLayout(3);
   };  
-  
-  pxgallery.prototype.getBarrelHeightMax = function() {
-    return _options.heightMax;
-  };
   
   pxgallery.prototype.getBarrelHeightMin = function() {
     return _options.heightMin;
   };
-
+  
+  pxgallery.prototype.setMdSquareNum = function(num) {
+    _options.mdSquareNum = num;
+    if (_options.layout === 4) this.setLayout(_options.layout)
+  };
+  
+  pxgallery.prototype.setSmSquareNum = function(num) {
+    _options.smSquareNum = num;
+    if (_options.layout === 4) this.setLayout(_options.layout)
+  };
+  
   return pxgallery;
 }));
