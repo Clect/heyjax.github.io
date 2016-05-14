@@ -3,7 +3,7 @@
     <h3>PXGallery</h3>
     <p>Showcase your photos the way they were meant to be seen.</p>
     <span class="arrow"></span>
-    <button class="button"> Start Now </button>
+    <button class="button" v-link="{ path: '/setting' }"> Start Now </button>
   </div>
 </template>
 
@@ -18,12 +18,12 @@
     background-repeat: no-repeat;
     color: white;
     text-align: center;
-    
+
     h3 {
       padding: 20vh 0;
-      font-size: 4rem;   
+      font-size: 4rem;
     }
-    
+
     .button {
       margin: 10vh 0;
       padding: 1rem;
@@ -35,7 +35,7 @@
       border-radius: 1rem;
       border: 2px white solid;
       transition: .5s ease-in-out;
-      
+
       &:hover {
         background-color: white;
         color: black;

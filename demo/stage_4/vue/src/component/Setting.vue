@@ -25,11 +25,11 @@
           <li v-if="barrel">Cuurent setting minimun height of the row: {{ rowMinHeight }}
             <input type="range" min="100" max="800" v-model="rowMinHeight" @mouseup="sendRowMinHeight">
           </li>
-          <li v-if="square">A box space (1-12) when over 769px: {{ mdSquareNum }}
-            <input type="range" min="1" max="6" v-model="mdSquareNum" @mouseup="sendMdSquareNum">
+          <li v-if="square">A box space (1-12) when over 769px: {{ mdSquareSize }}
+            <input type="range" min="1" max="6" v-model="mdSquareSize" @mouseup="sendMdSquareSize">
           </li>
-          <li v-if="square">A box space (1-12) when under 768px: {{ smSquareNum }}
-            <input type="range" min="1" max="6" v-model="smSquareNum" @mouseup="sendSmSquareNum">
+          <li v-if="square">A box space (1-12) when under 768px: {{ smSquareSize }}
+            <input type="range" min="1" max="6" v-model="smSquareSize" @mouseup="sendSmSquareSize">
           </li>
         </ul> 
     </div>
@@ -81,8 +81,8 @@ export default {
       column:           store.options.column,
       columnMinHeight:  store.options.columnMinHeight,
       rowMinHeight:     store.options.heightMin,
-      mdSquareNum:      store.options.mdSquareNum,
-      smSquareNum:      store.options.smSquareNum,
+      mdSquareSize:     store.options.mdSquareSize,
+      smSquareSize:     store.options.smSquareSize,
       puzzle:           false,
       waterfall:        false,
       barrel:           false,
@@ -145,13 +145,13 @@ export default {
       store.options.rowMinHeight = this.rowMinHeight
       gallery.setBarrelHeight(this.rowMinHeight)
     },
-    sendMdSquareNum () {
-      store.options.mdSquareNum = this.mdSquareNum
-      gallery.setMdSquareNum(this.mdSquareNum)
+    sendMdSquareSize () {
+      store.options.mdSquareSize = this.mdSquareSize
+      gallery.setMdSquareSize(this.mdSquareSize)
     },
-    sendSmSquareNum () {
-      store.options.smSquareNum = this.smSquareNum
-      gallery.setSmSquareNum(this.smSquareNum)
+    sendSmSquareSize () {
+      store.options.smSquareSize = this.smSquareSize
+      gallery.setSmSquareSize(this.smSquareSize)
     }
     
   },
@@ -165,13 +165,13 @@ export default {
       gallery = new pxgallery();
       gallery.setImage(store.url,
       {
-        layout: store.options.layout,
-        puzzleHeight: store.options.puzzleHeight,
-        column: store.options.column,
-        heightMin: store.options.heightMin,
-        gutter: store.options.gutter,
-        mdSquareNum: store.options.mdSquareNum,
-        smSquareNum: store.options.smSquareNum
+        layout:         store.options.layout,
+        puzzleHeight:   store.options.puzzleHeight,
+        column:         store.options.column,
+        heightMin:      store.options.heightMin,
+        gutter:         store.options.gutter,
+        mdSquareSize:   store.options.mdSquareSize,
+        smSquareSize:   store.options.smSquareSize
       })
       this.totalNumber = store.url.length 
       transition.next()

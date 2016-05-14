@@ -19,8 +19,8 @@ store.options = {
   coulumn : 5,
   heightMin : 150,
   gutter : 10,
-  mdSquareNum: 2,
-  smSquareNum: 4,
+  mdSquareSize: 2,
+  smSquareSize: 4,
   fullscreenState : true 
 }
 
