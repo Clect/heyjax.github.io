@@ -1,3 +1,122 @@
+@charset "UTF-8";
+body, div, dl, dt, dd, ul, ol, li,
+h1, h2, h3, h4, h5, h6, pre, code,
+form, fieldset, legend, input, button,
+textarea, p, blockquote, th, td {
+  margin: 0;
+  padding: 0; }
+
+body {
+  font-family: Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif; }
+
+footer {
+  margin-top: 10rem;
+  padding: 3rem 0;
+  position: relative;
+  font-size: 1rem;
+  background-color: #3a3a3a; }
+  footer #github {
+    position: absolute;
+    left: 3rem; }
+  footer #backtotop {
+    position: absolute;
+    right: 3rem;
+    background-image: url("../img/backtotop.png");
+    background-size: 1rem;
+    background-repeat: no-repeat;
+    padding-left: 1rem; }
+
+main {
+  padding-top: 5rem; }
+  main .location {
+    padding-bottom: 5rem; }
+    main .location ul {
+      padding-left: 3rem; }
+      main .location ul li {
+        display: inline-block;
+        font-size: 1rem; }
+  main .pxgalleryContainer .selected {
+    border: 0.85rem solid #7C7EFF; }
+
+header {
+  height: 3rem;
+  background-color: #2f2f38;
+  color: #929292;
+  font-size: 1rem;
+  line-height: 3rem;
+  position: relative; }
+  header span {
+    font-size: 2rem;
+    position: absolute;
+    left: 1rem;
+    font-weight: bold; }
+  header ul.menu {
+    text-align: center; }
+    header ul.menu li {
+      list-style: none;
+      display: inline-block;
+      width: 5rem; }
+      header ul.menu li a {
+        display: block;
+        -webkit-transition-duration: 0.3s;
+        transition-duration: 0.3s;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-transition-property: color, background-color;
+        transition-property: color, background-color; }
+        header ul.menu li a:hover {
+          color: #111;
+          background-color: #f8f8f8; }
+  header ul.submenu {
+    position: absolute;
+    z-index: 2; }
+    header ul.submenu li {
+      font-size: 1rem;
+      width: 10rem;
+      display: block;
+      color: #fff;
+      background-color: #2f2f38;
+      cursor: pointer;
+      -webkit-transition-duration: 0.3s;
+      transition-duration: 0.3s;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-transition-property: color, background-color;
+      transition-property: color, background-color; }
+      header ul.submenu li:hover {
+        color: #111;
+        background-color: #f8f8f8; }
+  header .edit {
+    height: 3rem;
+    background-color: #7C7EFF;
+    color: #fff; }
+    header .edit div {
+      width: 5rem;
+      height: 3rem;
+      display: inline-block;
+      text-align: center;
+      cursor: pointer;
+      -webkit-transition-duration: 0.3s;
+      transition-duration: 0.3s;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-transition-property: color, background-color;
+      transition-property: color, background-color; }
+      header .edit div:hover {
+        color: #111;
+        background-color: #f8f8f8; }
+      header .edit div span {
+        font-size: 0.75rem;
+        font-weight: lighter; }
+
+body {
+  background-color: #4a4a4a;
+  color: #fff; }
+
+a {
+  text-decoration: none;
+  color: #fff; }
+
 .pxgalleryContainer {
   width: 80%;
   overflow: hidden;
